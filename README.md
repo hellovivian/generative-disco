@@ -1,6 +1,9 @@
 # generative disco
 
+![](https://ibb.co/6HNvQT2)
+
 # How it Works
+
 
 ## The Notebook/App
 
@@ -21,6 +24,7 @@ huggingface-cli login
 ```
 python flask_app.py
 ```
+Docker hub `hellovivian/art-ai:disco_local`
 
 ### Making Music Videos
 
@@ -34,6 +38,5 @@ This work built off of stable diffusion videos by Nate Raw at Hugging Face.
 
 You can file any issues/feature requests 
 
-Enjoy 🤗
 
 
