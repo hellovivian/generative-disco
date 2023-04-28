@@ -49,8 +49,11 @@ conda activate video
 python flask_app.py
 ```
 
-### Repo Structure
+## Repo Structure
 
+The system was built on top of two open-source repositories: a) stable-diffusion-videos \cite{stablediffusionvideos} from Hugging Face and b) wavesurfer.js \cite{wavesurfer}.
+
+The Stable Diffusion checkpoint used was V1-4. The web application was written in Python, Javascript, and Flask. Images were generated with 50 iterations on an NVIDIA V100. The music, assets (images), stylesheets, and Javascript are collected in the static folder. Logic and routing is controlled by `flask_app.py`
 
 
 ## Credits
