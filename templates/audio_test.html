@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Video Annotation System</title>
+
+        <link href="data:image/gif;" rel="icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap -->
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Roboto:wght@300c&Gloock&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/landing_page.css">
+        <script src="../static/scripts/tracks.js"></script>
+        <script src="../static/scripts/gallery.js"></script>
+
+  
+        <!-- wavesurfer -->
+        <script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.js"></script>
+
+        <!-- plugins -->
+        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.timeline.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.minimap.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.cursor.js"></script>
+
+        <!-- Demo -->
+        <script src="./static/scripts/main_trivia.js"></script>
+        
+        <!-- highlight.js for syntax highlighting in this example -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+
+    <div id="logo_container">
+        <!-- <img id='logo' src="https://bestanimations.com/media/mirror-balls/1665261514disco-ball-animated-gif-15.gif"> -->
+        <!-- <img id='logo' src="https://i.gifer.com/origin/46/460a6dc4e3949182fe60cf720c912a96_w200.gif"> -->
+        <img id='logo' src="https://i.pinimg.com/originals/05/91/c7/0591c7d9ed972c451f02e9d52199f1d6.gif">
+        
+    
+        <h3> generative disco</h3> 
+        <!-- <div class="user_study_case">
+            <input value="seleners"></input><button type="submit">go
+            </button>
+        </div>                                     -->
+        
+
+    </div>
+
+    <body itemscope itemtype="http://schema.org/WebApplication">
+
+        <div id="loading"  >
+            <!-- <img id="loading_gif" src='https://i.pinimg.com/originals/05/91/c7/0591c7d9ed972c451f02e9d52199f1d6.gif'/> -->
+        </div>
+
+        <div id="page_container">
+            <div id="page_left_container" class="ui_region">
+                <h4>Audio Area </h4>
+                <div class="container">
+
+                    <div id="demo">
+                       
+                        <!-- This video comes from NASA Video Gallery https://www.youtube.com/watch?v=Zg7i4q_EX9E -->
+                        
+        
+                        <!-- <p id="subtitle2" class="text-center text-info lyric" onclick="transferLyric(this)"> <em> New York (ayy) <br></p> -->
+                            <!-- <p class="text-center text-info lyric" onclick="transferLyric(this)">Concrete jungle where dreams are made of </em> -->
+                                <!-- ♪  -->
+                             <!-- <span id="play">
+                            <i class="glyphicon glyphicon-play"></i>
+                            Suggest
+                        </span> -->
+                    </p>
+        
+                    
+        
+        
+                    </div>
+        
+                    <form role="form" name="edit" style="display:flex; flex-direction:row" 
+                    
+                     id="full-form" enctype="multipart/form-data">
+
+                        
+                        
+
+                        <div class='video_interval'>
+                            <!-- <div class="interval_action_bar" > -->
+                                <div style="display:flex; flex-direction:row;">
+                                <div id="play-button" class="play-button btn btn-primary btn-block interval-button" onclick="playWaveSurfer()">
+                                    <span id="play">
+                                        <i class="glyphicon glyphicon-play"></i>
+                                        Play
+                                    </span>
+            
+                                    <span id="pause" style="display: none">
+                                        <i class="glyphicon glyphicon-pause"></i>
+                                        Pause
+                                    </span>
+                                </div> 
+                                <button type="button" class="" onclick="addInterval()">
+                                   
+                                   ADD INTERVAL
+                                </button>
+                               <button type="button" class="" onclick='deleteRegion()'> DELETE
+                                <img width='24px'  src="./static/images/trash.png">
+                               </button>
+                               <button type="button" class="button" onclick="saveRegions()">
+                                SAVE
+                                 <img width='24px' src="https://icons.veryicon.com/png/o/miscellaneous/utility/save-44.png">
+                                </button>
+                                <button type="button" class="button" onclick="alignIntervals()">
+                                    ALIGN INTERVALS
+                                     <img width='24px' src="https://icons.veryicon.com/png/o/miscellaneous/utility/save-44.png">
+                                    </button>
+
+                                
+                            </div>
+                                <!-- onclick="transferLyric(this)" -->
+                                
+                                <!-- <h5>TIME START</h5>
+                                <input id="start" class="interval_timestamp_area" name="start" />
+                                <h5>TIME END</h5>
+                                <input  id="end" class="interval_timestamp_area" name="end" /> -->
+                                
+                            <!-- </div> -->
+                            <!-- <h5>AUDIO WAVE</h5> -->
+                            <div id="wave-timeline"></div>
+                        
+                         
+                            <div id="waveform_copy">
+                            
+                            </div>
+                        <div id="waveform">
+                            
+                        </div>
+                        
+                        
+                        <div style="display:flex;">
+                            <div style="width:50%; display:flex;">
+                                <input id="description" name="description" class="text-center text-info lyric form-control"  placeholder="Describe Interval">
+                            <button  type="button" class="interval-button" style="display: flex" onclick="brainstormGPT()"> 
+                                
+                                <img width='24px' src="https://cdn-icons-png.flaticon.com/512/118/118063.png">
+                                <p>BRAINSTORM</p>
+                            </button>
+                            </div>
+                            <div style="display:flex; width:15%">
+                            
+                                <h5>Interval #</h5>
+                                <input id="interval_num"  class="form-control interval_num_area" rows="1" name="interval_num" >
+                            </div>
+                           
+                            <div style="display:flex; width:20%">
+                                <h5 > BEGIN TIME:</h5><input id="start" class="form-control interval_timestamp_area" name="start" />
+                            </div>
+                           
+                            <div style=" display:flex; width:20%;">
+                                <h5> END TIME:</h5>
+                                <input  id="end" class=" form-control interval_timestamp_area" name="end" />
+                            </div>
+
+                            
+                           
+
+                        </div>
+                        
+                        <div></div>
+                         
+                        <!-- <div class="brainstorming_area">
+                            <div style="display:flex; flex-direction:row">
+                                <h5>Goal</h5>
+
+                            <textarea id='goal_info' class="form-control goal-info" placeholder="Write what you want to see in the video"></textarea>
+                            ### <input type="checkbox" value="on" id="isHold" name="isHold">Hold 
+                            <input type="checkbox" value="on" id="isLyric" name="isLyric">Lyric
+                            <div id="collapsible" class="interval-button" onclick="brainstormGPT()">SUGGEST <img width='24px' src="https://cdn-icons-png.flaticon.com/512/118/118063.png"></div>
+
+
+                            </div>
+                            
+                           
+                                                    
+                            <div>
+                                <div class="content"></div>
+                            </div>
+                        </div> -->
+                       
+                        
+                        
+
+                            <div id="interval_previews">
+                                
+                                
+                                <div id="start_prompt_area"  ondrop="drop(event)" ondragover="allowDrop(event)" class="preview_prompt_area">
+                                    
+
+                                    <input class="preview_input"  name="start_frame_preview" >
+
+                                        <img class="main_frame_preview"  id="start_frame_preview" onerror="setDefaultImg(this)" src='')}}>
+                                    
+
+                                    <div class="preview_form_area">
+
+                                       <!-- <h5> INTERVAL BEGINNING PROMPT</h5> -->
+                                    <!-- <input id="note" class="form-control" rows="1" name="region_number"></input> -->
+                                    <!-- <label for="note">PROMPT</label> -->
+                                    <textarea id="start_note" placeholder='Starting prompt' class="form-control" rows="1" name="start_note"></textarea>
+                                    <input id="start_seed" placeholder='Start Seed' class="form-control seed_info interval_timestamp_area" name="start_seed" >
+                                        
+                                    <!-- <textarea id="endnote" class="form-control" rows="2" name="endnote"></textarea> -->
+                                    <!-- <button class="btn preview-btn" onclick="generateImage()" >
+                                        <img width='32px'  src="./static/images/dice.png">
+                                          PREVIEW</button> -->
+                                         
+
+                                
+                                    </div>
+                                    
+                                    
+
+
+                                </div>
+                                <div id="end_prompt_area" class="preview_prompt_area" ondrop="drop(event)" ondragover="allowDrop(event)" >
+                                    <!-- <h5>INTERVAL END</h5> -->
+                                    <div class="preview_form_area" >
+                            
+
+                                        <!-- <input id="note" class="form-control" rows="1" name="region_number"></input> -->
+                                        <!-- <label for="note">PROMPT</label> -->
+                                        <textarea id="end_note" placeholder='Ending prompt' class="form-control" rows="1" name="end_note"></textarea>
+                                        <input id="end_seed" placeholder='End Seed' class="form-control seed_info interval_timestamp_area" name="end_seed" >
+                                        <!-- <textarea id="endnote" class="form-control" rows="2" name="endnote"></textarea> -->
+                                
+                                        <!-- <button class="btn preview-btn" onclick="generateEndImage()">
+                                            <img width='32px' src="./static/images/dice.png">
+                                            PREVIEW
+                                        </button> -->
+                                
+
+                                    </div>
+
+                                       
+                                    <input name="end_frame_preview" class="preview_input"  src={{url_for('static', filename='previews/3.jpg')}}>
+                                    <img class="main_frame_preview"  onerror="setDefaultImg(this)" id="end_frame_preview" src='')}}>
+                                     
+                                </div>
+                            </div>
+                            <div class="interval_action_bar">
+                                
+
+                                <button type="button" style="float:right" class="interval-button" onclick="generateInterval()" title="Export annotations to JSON">
+                                    <img width='24px' src="https://flaticons.net/icon.php?slug_category=miscellaneous&slug_icon=magic-wand">
+                                    GENERATE INTERVAL
+                                    </button>
+
+                               
+                            </div>
+
+                            <!-- <hr > -->
+                           
+
+                            <div>
+
+                             
+                                    <!-- <img width='24px' src="https://www.pngkit.com/png/full/333-3335263_browser-history-clock-icon-vector-white.png"> -->
+                                    <div class="generate_preview_title">
+                                        <h5  >BRAINSTORMING AREA <img width='18px' src="https://cdn-icons-png.flaticon.com/512/118/118063.png" onclick="brainstorm()"> </h5>     
+                                    </div>
+                                   
+                                
+                       
+                                <div id="preview_history_area">
+                                   
+                                    <div style="display:flex; flex-direction:column;">
+
+                                       
+                                            
+                                            
+                                            <!-- <div class="upload_file_box">
+                                                <input type="checkbox" id="imgChecked" name="imgChecked" value="on">
+                                                ### <input type="hidden" name="imgChecked" value="off"> 
+                                                Use Img
+                                                 
+                                                <img class="main_frame_preview upload" id="initialImgPreview" src="https://static.thenounproject.com/png/3752772-200.png">
+                                                <input class="custom-file-input" name="image" type="file" id="initialImg" onchange="sendInitialImg(this)" >
+                                                
+                                            </div> -->
+                                            
+
+                                       
+                                            <div style="display:flex; flex-direction:row; width:90%; margin-top:1em;">
+                                                <!-- <textarea id='goal_info' class="form-control goal-info" placeholder="Type goal for the video interval / Type lyrics relevant to it"></textarea> -->
+                                                <!-- <input type="checkbox" value="on" id="isLyric" name="isLyric">Lyric -->
+                                                <!-- <textarea id='translated_lyrics' style='display:none' class="form-control goal-info" placeholder="Translated"></textarea> -->
+
+
+                                                <!-- <div id="collapsible" class="interval-button" onclick="brainstormGPT()">
+                                                     <img width='24px' src="https://cdn-icons-png.flaticon.com/512/118/118063.png">
+                                                    SUGGEST
+                                                </div> -->
+
+
+                                            </div>
+
+                                            <div style="display:flex; flex-direction:row; width:100%;">
+                                                <!-- <input type="text" id="subject_prompt" name="test_prompt" placeholder="Start prompt" class="form-control required" rows="2"  list="startPrompts" /> -->
+                                                <!-- <h5 width="10%; font-size:7em;">→</h5> -->
+                                                <!-- <input type="text" id="subject_prompt2" name="test_prompt2"  placeholder="End prompt" class="form-control required" rows="2" list="endingPrompts" /> -->
+                                               
+                                             
+                                                <!-- <textarea id="test_prompt2" placeholder='Try a prompt' class="form-control" rows="2" name="test_prompt"></textarea> -->
+                                               
+                                                  
+                                                   </div>
+                                                   <!-- <h5 class=""  style="width: 50%">BRAINSTORMING AREA </h5> -->
+                                                   <div style="display:flex; flex-direction: row;">
+                                                    <h6 class="subject_empty"  style="width: 50%">SUBJECTS </h6>
+                                                     <!-- <h6 style="width:50%">END SUBJECT</h6> -->
+
+                                                   </div>
+                                               
+                                                <div  style="display:flex; flex-direction:row; width:100%;">
+                                                    <div style="display:flex; flex-direction: row; width: 50%;">
+                                                        <div class="pill subject_empty" id="startSubject1" onclick="subjectPillClick(this)" >digital painting</div>
+                                                <div class="pill  subject_empty" id="startSubject2" onclick="subjectPillClick(this)">illustration</div>
+                                                <div class="pill  subject_empty" id="startSubject3" onclick="subjectPillClick(this)" >3d render</div>
+                                                    </div>
+
+                                                
+                                                   </div>
+                                                
+                                               
+                                                   <div style="display:flex; flex-direction: row;">
+                                                    <h6 class="empty"  style="width: 50%">CHOOSE STYLES </h6> 
+                                                    <!-- <h6 style="width:50%">END STYLE</h6> -->
+
+                                                   </div> 
+
+                                                   <div style="display: flex; flex-direction: row;">
+                                                <div  style="display:flex; flex-direction:column; width:50%;">
+                                                    <div style="display:flex; flex-direction: row">
+                                                        <div class="color-style pill header" id="color_start0" onclick="pillClick(this)" > COLOR</div>
+                                                        <div class="color-style pill empty " id="color_start1" onclick="pillClick(this)"></div>
+                                                        <div class="color-style pill empty " id="color_start2" onclick="pillClick(this)"></div>
+                                                        <div class="color-style pill empty " id="color_start3" onclick="pillClick(this)"></div>
+                                                        <div class="color-style pill empty " id="color_start4" onclick="pillClick(this)"></div>
+                                                        <div class="color-style pill empty " id="color_start5" onclick="pillClick(this)" ></div>
+                                                        
+
+
+                                                    </div>
+                                                    <div style="display:flex; flex-direction: row">
+                                                        <div class="color-style pill header" id="angle_start0" onclick="pillClick(this)"> ANGLE</div>
+                                                        <div class="pill angle-style empty " id="angle_start1" onclick="pillClick(this)"></div>
+                                                        <div class="pill angle-style empty " id="angle_start2" onclick="pillClick(this)" > </div>
+                                                        <div class="pill angle-style empty " id="angle_start3" onclick="pillClick(this)" > </div>
+                                                        <div class="pill angle-style empty " id="angle_start4" onclick="pillClick(this)" > </div>
+                                                        <div class="pill angle-style empty " id="angle_start5" onclick="pillClick(this)"> </div>
+                                                        
+
+
+
+                                                    </div>                                                 
+                                                    <div style="display:flex; flex-direction: row">
+                                                        <div class="action-style pill header" id="time_start0" > TIME</div>
+
+                                                        <div class="pill action-style empty" id="time_start1" onclick="pillClick(this)"> </div>
+                                                        <div class="pill action-style empty" id="time_start2" onclick="pillClick(this)" > </div>
+                                                        <div class="pill action-style empty" id="time_start3" onclick="pillClick(this)" > </div>
+                                                        <div class="pill action-style empty" id="time_start4"  onclick="pillClick(this)"> </div>
+                                                        <div class="pill action-style empty" id="time_start5" onclick="pillClick(this)" > </div>
+
+
+
+
+                                                    </div> 
+
+                                                </div>
+                                                <!-- <div  style="display:flex; flex-direction:column; width:50%;">
+                                                    <div style="display:flex; flex-direction: row">
+                                                        <div class="pill" id="color_end1" contenteditable="true" value="End..."></div>
+                                                        <div class="pill" id="color_end2" contenteditable="true" value="End..."></div>
+
+
+                                                    </div>                                                
+                                                    <div style="display:flex; flex-direction: row">
+                                                        <div class="pill" id="angle_end1" contenteditable="true" value="End..."></div>
+                                                        <div class="pill" id="angle_end2" contenteditable="true" value="End..."></div>
+
+
+                                                    </div>  
+                                                    
+                                                    <div style="display:flex; flex-direction: row">
+                                                        <div class="pill" id="time_end1" contenteditable="true" value="End..."></div>
+                                                        <div class="pill" id="motion_end2" contenteditable="true" value="End..."></div>
+
+
+                                                    </div>  
+                                                     
+ 
+                                                 </div> -->
+                                                </div>
+                                                   <div style="display:flex; flex-direction:row; width:90%;">
+                                                <input type="text" ondrop="dropPromptOnly(event)" ondragover="allowDrop(event)" id="start_prompt" name="start_prompt" onclick="changePromptFocus(this)" placeholder="Start prompt" class="active_prompt form-control" rows="2"  list="startPrompts" />
+                                                <!-- <h5 width="10%; font-size:7em;">→</h5> -->
+                                                <!-- <input type="text" id="end_prompt" name="end_prompt" onclick="changePromptFocus(this)" placeholder="End prompt" class=" form-control" rows="2" list="endingPrompts" /> -->
+                                                <!-- <datalist id="startPrompts">
+                                                <option id="color_start" value="..."></option>
+                                                <option id="angle_start" value="..."></option>
+                                                <option id="time_start" value="..."></option>
+                                                </datalist> -->
+                                                <!-- <textarea id="test_prompt2" placeholder='Try a prompt' class="form-control" rows="2" name="test_prompt"></textarea> -->
+                                                <!-- <datalist id="endingPrompts">
+                                                    <option id="color_end" value="End..."></option>
+                                                    <option id="angle_end" value="..."></option>
+                                                    <option id="time_end" value="..."></option>
+                                                    </datalist> -->
+
+
+                                                
+                                                <!-- <textarea id="test_seed2" placeholder='Seed (optional)' class="form-control" rows="1" name="test_seed"></textarea> -->
+
+                                                <input type="text" id="test_seed" placeholder='Seed (optional)' class="form-control" rows="1" name="test_seed">
+                                                <button type="button" class="btn preview-btn" onclick=" generateBrainstormImg();">
+                                                    <img width='24px'  src="./static/images/dice.png">
+                                                    GEN PREVIEWS</button>
+                                            </div>
+                                            
+
+                                            
+                                            
+                                        
+                                            
+                                           
+                                                <!-- <textarea id="test_prompt" placeholder='Try a prompt' class="form-control" rows="2" name="test_prompt"></textarea> -->
+                                                <!-- <input id="test_seed" class="form-control seed_info interval_timestamp_area" name="test_seed" > -->
+                                               
+                                          
+                                    </div>
+                                        
+                                            
+            
+                            
+
+                                    
+                                    <h5 style="color:black"><img width='20px' src="https://cdn-icons-png.flaticon.com/512/61/61122.png"> &nbsp; HISTORY</h5>
+                                    
+                                    <div id="generations_container">
+                                        
+                                        {% for generation in generations%}
+                                    
+                                            <div class="generation_container show" >
+                                                <div class="cardcaption">
+                                                    <div class="promptparams">
+                                                        {{generation[0][12:-4]}} 
+                                                    </div>
+                                                    
+                                                    <!-- <img class="generation_action_button" onclick="regenerateFrame(this);" width='32px' src={{url_for('static', filename='images/refresh.png')}}/> -->
+                                    
+                                
+                                
+                                                </div>
+                                    
+                                                <img draggable="true" ondragstart="drag(event)"  id={{generation[1]}} class="generated_image" onclick="changeFramePreview(this)" alt={{generation[13:-5]}}  title={{generation[13:-5]}} src={{url_for('static', filename=generation[0])}}/>
+                                                <img class="generation_action_button" onclick="varyImage(this);" width='32px' src="https://cdn2.iconfinder.com/data/icons/media-player-ui/512/Media-Icon-21-512.png"/>
+
+                                                
+                                                <img class="generation_action_button" onclick="hideContainer(this);" width='32px' src="https://cdn-icons-png.flaticon.com/512/3515/3515498.png"/>
+                                                
+                                            </div>
+                                        
+                                        {% endfor %}
+                                    
+                                    </div>
+                                
+                                </div>
+                            </div>
+
+
+                            
+
+                            
+       
+                            
+                        </div>
+                 
+                        
+                    </form>
+                </div>
+                
+
+                
+                
+               
+            
+            </div>
+            <div id="page_right_container" class="ui_region">
+                
+                <div class="video_area">
+                    <h4>Video Area </h4>
+                    <video style="margin: 0 auto;" id="input_video" src={{output_video}} type="video/mpeg" onclick="playRegionVideo(this)"> 
+
+                    
+                    </video>
+                    <img id="deleteVideo" onclick="deleteStitchedVideo()" width='32px' src="https://cdn-icons-png.flaticon.com/512/3515/3515498.png"/>
+
+                    <!-- <button class="play-button btn btn-primary btn-block interval-button" data-action="play2">
+                        <span id="playvid2">
+                            <i class="glyphicon glyphicon-play"></i>
+                            Play
+                        </span>
+    
+                        <span id="pausevid2" style="display: none">
+                            <i class="glyphicon glyphicon-pause"></i>
+                            Pause
+                        </span>
+                    </button> -->
+    
+
+                </div>
+                
+                <!-- <video style="margin: 0 auto;" onclick="playRegionVideo(this)"  id="input_video" src={{url_for('static', filename='output/output.mp4')}} type="video/mpeg"> 
+                    
+                </video> -->
+  
+        
+            </div>
+           
+        </div> 
+
+        <!-- <button type="button" class="generate_video" onclick='generateVideo()' >Make video from prompts</button>  -->
+
+        
+        
+        <div id="tracks_container" class="ui_region">
+            
+            <h4> Tracks </h4>
+
+       
+            {% for interval_name, interval_data in frames.items()%}
+
+            <div style="display:flex; flex-direction:column">
+                <p class ='interval_prompts'>{{interval_name}}</p>
+                <div class="video_track" >
+                    <div style="display:flex; flex-direction:column">
+                        <h5>VIDEO INTERVAL</h5> 
+                        <video height="100%"  onclick="playRegionVideo(this)" src="{{interval_data['interval_video']}}"></video>
+                        <img class="generation_action_button" onclick="hideTrack(this);" width='32px' src={{url_for('static', filename='images/trash.png')}}/>
+
+                    </div>
+
+                    <div style="display:flex; flex-direction:column">
+                        <h5>FRAMES</h5> 
+                       <div>
+                            {% for frame in interval_data['interval_frames'] %}
+                    
+
+        
+                            <img class="frame_preview" src={{url_for('static', filename=frame)}}>
+
+                
+                            {% endfor %}
+                        </div>
+                        
+                    </div>
+                      
+                        
+
+
+                <!-- <div class="dice_button">
+                    <img width='32px' src="./static/images/dice.png">
+                    <p>END</p>
+                </div> -->
+
+                </div>
+                
+                
+                
+            {% endfor %}
+                <div><button type="button" class='stitch' onclick='stitchVideo()'> STITCH VIDEO <img width='64px' src={{url_for('static', filename='images/stitch.gif')}}></div>
+            </div>
+
+
+        </div>
+
+        <!-- <script>
+
+
+            var coll = document.getElementsByClassName("collapsible");
+            var i;
+
+            for (i = 0; i < coll.length; i++) {
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (content.style.display === "block") {
+                content.style.display = "none";
+                } else {
+                content.style.display = "block";
+                }
+            });
+            }
+
+        </script> -->
+    </body>
+</html>
