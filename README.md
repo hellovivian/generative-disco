@@ -2,6 +2,8 @@
 
 🏗️ Open-sourcing efforts in progress. Check mid-May 2023. 🌷
 
+![GenDisco](https://user-images.githubusercontent.com/15935546/235154270-3c9d42df-ac39-4472-b0d5-c1e5ae9eb228.gif)
+
 Visuals are a core part of our experience of music. However, creating music visualization is a complex, time-consuming, and resource-intensive process. We introduce Generative Disco, a generative AI system that helps generate music visualizations with large language models and text-to-image models. Users select intervals of music to visualize and then parameterize that visualization by defining start and end prompts. These prompts are warped between and generated according to the beat of the music for audioreactive video. We introduce design patterns for improving generated videos: "transitions", which express shifts in color, time, subject, or style, and "holds", which encourage visual emphasis and consistency.
 
 ## Examples
@@ -35,6 +37,10 @@ huggingface-cli login
 conda activate video
 python flask_app.py
 ```
+
+### Repo Structure
+
+
 
 ## Credits
 
