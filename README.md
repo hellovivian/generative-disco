@@ -12,6 +12,8 @@ https://user-images.githubusercontent.com/15935546/235147315-9145c8e3-4bf2-430b-
 
 ### Setup
 
+*Requires a GPU with a decent amount of VRAM.
+
 Install the package
 
 ```bash
