@@ -51,19 +51,31 @@ python flask_app.py
 
 ## Repo Structure
 
-The system was built on top of two open-source repositories: a) stable-diffusion-videos \cite{stablediffusionvideos} from Hugging Face and b) wavesurfer.js \cite{wavesurfer}.
 
 The Stable Diffusion checkpoint used was V1-4. The web application was written in Python, Javascript, and Flask. Images were generated with 50 iterations on an NVIDIA V100. The music, assets (images), stylesheets, and Javascript are collected in the static folder. Logic and routing is controlled by `flask_app.py`
 
 
 ## Credits
-
-This work builds on a repository called stable-diffusion-videos by Nate Raw at Hugging Face.
+The system was built on top of two open-source repositories: a) stable-diffusion-videos from Hugging Face, written by Nate Raw and b) wavesurfer.js. stable-diffusion-videos also builds on
 [a script](https://gist.github.com/karpathy/00103b0037c5aaea32fe1da1af553355
 ) shared by [@karpathy](https://github.com/karpathy). The script was modified to [this gist](https://gist.github.com/nateraw/c989468b74c616ebbc6474aa8cdd9e53), which was then updated/modified to this repo. 
 
+## Citation
+
+BibTex 
+```
+@misc{liu2023generative,
+      title={Generative Disco: Text-to-Video Generation for Music Visualization}, 
+      author={Vivian Liu and Tao Long and Nathan Raw and Lydia Chilton},
+      year={2023},
+      eprint={2304.08551},
+      archivePrefix={arXiv},
+      primaryClass={cs.HC}
+}
+```
+
 ## Contributing 
 
-You can file any issues/feature requests 
+You can file any issues/feature requests :)
 
 
