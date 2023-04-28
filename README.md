@@ -5,12 +5,15 @@
 ## Examples
 
 https://user-images.githubusercontent.com/15935546/235145415-e30db4a2-8e10-4751-9647-bb55dc189719.mp4
-  
+
 https://user-images.githubusercontent.com/15935546/235147315-9145c8e3-4bf2-430b-8e51-2fe0b8a714be.mov
 
+### Setup Option 1
+
+Docker hub `docker pull hellovivian/art-ai:disco_local`
 
 
-### Setup
+### Setup Option 2
 
 *Requires a GPU with a decent amount of VRAM.
 
@@ -18,6 +21,7 @@ Install the package
 
 ```bash
 pip install -U stable_diffusion_videos
+conda env create -f disco_environment.yml
 ```
 
 Authenticate with Hugging Face
@@ -27,10 +31,9 @@ huggingface-cli login
 ```
 
 ```
+conda activate video
 python flask_app.py
 ```
-Docker hub `hellovivian/art-ai:disco_local`
-
 
 ## Credits
 
@@ -38,7 +41,7 @@ This work builds on a repository called stable-diffusion-videos by Nate Raw at H
 [a script](https://gist.github.com/karpathy/00103b0037c5aaea32fe1da1af553355
 ) shared by [@karpathy](https://github.com/karpathy). The script was modified to [this gist](https://gist.github.com/nateraw/c989468b74c616ebbc6474aa8cdd9e53), which was then updated/modified to this repo. 
 
-## Contributing
+## Contributing 
 
 You can file any issues/feature requests 
 
