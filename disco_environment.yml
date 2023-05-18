@@ -136,7 +136,7 @@ dependencies:
   - xz=5.2.5=h7b6447c_0
   - yaml=0.2.5=h7b6447c_0
   - zipp=3.11.0=py37h06a4308_0
-  - zlib=1.2.12=h7f8727e_1
+  - zlib=1.2.12
   - zstd=1.5.2=ha4553b6_0
   - pip:
     - absl-py==1.4.0
