@@ -486,7 +486,7 @@ def generate_interval():
         height=512,                            # use multiples of 64
         width=384,   
                                 # use multiples of 64
-        audio_filepath=f'./static/audio/{music}',    # Use your own file
+        audio_filepath=f'./static/audio/{music}.wav',    # Use your own file
         audio_start_sec=current_interval_times[0],       # Start second of the provided audio
         fps=fps,                               # important to set yourself based on the num_interpolation_steps you defined
         batch_size=4,                          # increase until you go out of memory.
