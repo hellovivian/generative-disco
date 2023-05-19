@@ -36,7 +36,7 @@ pipeline = StableDiffusionWalkPipeline.from_pretrained(
     ).to("cuda")
 
 
-music = 'clairdelune.wav'
+music = 'clairdelune'
 
 def randn_tensor(
     shape: Union[Tuple, List],
