@@ -553,10 +553,47 @@ def brainstorm_gpt():
 
     prompt = f"In 5 words or less, describe an image that symbolizes these lyrics '{goal}':"
     print(prompt)
-    response1 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-    response2 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-    response3 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+    # response1 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+    # response2 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+    # response3 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
 
+    response1 = openai.Completion.create(
+        model="text-davinci-003",
+        prompt= prompt,
+        temperature=0,
+        max_tokens=72,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        n=1
+
+        )
+    response2 = openai.Completion.create(
+        model="text-davinci-003",
+        prompt= prompt,
+        temperature=1,
+        max_tokens=72,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        n=1
+
+        )
+    response3 = openai.Completion.create(
+        model="text-davinci-003",
+        prompt= prompt,
+        temperature=2,
+        max_tokens=72,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        n=1
+
+        )
+
+    response1 = response1["choices"][0].text.strip()
+    response2 = response2["choices"][0].text.strip()
+    response3 = response3["choices"][0].text.strip()
 
     
 

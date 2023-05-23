@@ -285,57 +285,62 @@ function brainstorm() {
 }
 
 function brainstormGPT() {
-    $("#loading").show();
-    $.ajax({
-        type: "POST",
-        url: '/brainstorm_gpt',
-        data: JSON.stringify({ 
 
-            'goal': $("#description")[0].value,
-           
+    if ($("#openaikey")[0].value != "") {
+        $("#loading").show();
+        $.ajax({
+            type: "POST",
+            url: '/brainstorm_gpt',
+            data: JSON.stringify({ 
 
-        } ),
-        processData: false,
-        cache: false,
-        async: true,
-        contentType: 'application/json;charset=UTF-8',
-        success: function(data) {
-            $("#loading").hide();
-           
-            // $(".content")[0].innerHTML = ""
+                'goal': $("#description")[0].value,
             
-            $("#startSubject1")[0].innerHTML = data["subject1"];
-            $("#startSubject2")[0].innerHTML = data["subject2"];
-            $("#startSubject3")[0].innerHTML = data["subject3"];
 
-
-            $(".subject_empty").removeClass("subject_empty");
-            brainstorm();
-           
-            // $("#color_end1")[0].value = data[0][1];
-            // $("#angle_end1")[0].value = data[1][1];
-            // $("#time_end1")[0].value = data[2][1];
+            } ),
+            processData: false,
+            cache: false,
+            async: true,
+            contentType: 'application/json;charset=UTF-8',
+            success: function(data) {
+                $("#loading").hide();
+            
+                // $(".content")[0].innerHTML = ""
+                
+                $("#startSubject1")[0].innerHTML = data["subject1"];
+                $("#startSubject2")[0].innerHTML = data["subject2"];
+                $("#startSubject3")[0].innerHTML = data["subject3"];
 
 
-            // "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'> Color transition:"  + data[0] + "<br>"
-            // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Motion transition:"  + data[1] + "<br>"
-            // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Perspective transition:"  + data[2] + "<br>"
+                $(".subject_empty").removeClass("subject_empty");
+                brainstorm();
             
-            // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Lyric suggestion:"  + data[3] + ""
-            // // $(".content")[0].innerHTML += "</ul>"
-            
-            
-            
-        },
-        error: function (request, status, error) {
-            $("#loading").hide();
-            brainstormGPT();
-            clearInterval(handle);
-            console.log("Error");
-            
-    
-        }
-    });
+                // $("#color_end1")[0].value = data[0][1];
+                // $("#angle_end1")[0].value = data[1][1];
+                // $("#time_end1")[0].value = data[2][1];
+
+
+                // "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'> Color transition:"  + data[0] + "<br>"
+                // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Motion transition:"  + data[1] + "<br>"
+                // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Perspective transition:"  + data[2] + "<br>"
+                
+                // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Lyric suggestion:"  + data[3] + ""
+                // // $(".content")[0].innerHTML += "</ul>"
+                
+                
+                
+            },
+            error: function (request, status, error) {
+                $("#loading").hide();
+                brainstormGPT();
+                clearInterval(handle);
+                console.log("Error");
+                
+        
+            }
+        });
+    } else {
+        alert("Please enter an OpenAI API key in the field on the top right.");
+    }
 }
 
 
