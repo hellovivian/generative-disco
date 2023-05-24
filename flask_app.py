@@ -549,6 +549,8 @@ def brainstorm():
 
 @app.route("/brainstorm_gpt", methods=["POST"])
 def brainstorm_gpt():
+    openai.api_key = request.json["openai_api_key"]
+    
     goal = request.json["goal"]
 
     prompt = f"In 5 words or less, describe an image that symbolizes these lyrics '{goal}':"

@@ -294,6 +294,7 @@ function brainstormGPT() {
             data: JSON.stringify({ 
 
                 'goal': $("#description")[0].value,
+                'openai_api_key': $("#openaikey")[0].value
             
 
             } ),
