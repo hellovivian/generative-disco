@@ -331,7 +331,8 @@ function brainstormGPT() {
             },
             error: function (request, status, error) {
                 $("#loading").hide();
-                brainstormGPT();
+                alert("Error from GPT.");
+                // brainstormGPT();
                 clearInterval(handle);
                 console.log("Error");
                 
