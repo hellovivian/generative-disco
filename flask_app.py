@@ -14,19 +14,28 @@ from moviepy.editor import *
 import PIL
 from PIL import Image
 from io import BytesIO
+import pdb 
 import shutil
 
 import re
 import json
 import numpy as np
+# from diffusers import StableDiffusionImg2ImgPipeline
 import time
 from typing import List, Optional, Tuple, Union
 import random
+
+import subprocess
 
 num_generations = 0
 app = Flask(__name__)
 
 num_intervals = 0
+
+#FREE BARD KEY
+# os.environ['_BARD_API_KEY'] = "WggCKAABySLK9-O-S--7ug66CwTy7LJvGxm2JTJfDXfNlbdcqZytVLSztl2LE-NqZwoB-Q."
+
+openai.api_key = "YOUR OPENAPI KEY"
 
 pipeline = StableDiffusionWalkPipeline.from_pretrained(
     "CompVis/stable-diffusion-v1-4",
@@ -36,7 +45,8 @@ pipeline = StableDiffusionWalkPipeline.from_pretrained(
     ).to("cuda")
 
 
-music = 'clairdelune'
+music = 'clairdelune.wav'
+video = 'clairdelune.mp4'
 
 def randn_tensor(
     shape: Union[Tuple, List],
@@ -441,6 +451,30 @@ def save_regions():
         
         f.close()
     return
+
+import random
+import string
+
+@app.route("/download_audio", methods=["POST"])
+def download_audio():
+
+    global music
+    global video
+     
+    # printing lowercase
+    letters = string.ascii_lowercase
+    filename = ''.join(random.choice(letters) for i in range(10)) 
+
+    audio_file = request.json["audio_file"] 
+    print(audio_file)
+
+    subprocess.Popen(f"youtube-dl -f bestaudio  --extract-audio --audio-format mp3 --audio-quality 0 -o 'static/audio/{filename}.%(ext)s' {audio_file}", shell=True, stdout=subprocess.PIPE).stdout.read()
+    subprocess.Popen(f"ffmpeg -f lavfi -i color=c=blue:s=1280x720 -i static/audio/{filename}.mp3 -shortest -fflags +shortest static/audio/{filename}.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
+
+    music = f'{filename}.mp3'
+    video = f'{filename}.mp4'
+
+    return {"audio_filename":f'./static/audio/{filename}.mp3'}
     
 @app.route("/generate_interval", methods=["POST"])
 def generate_interval():
@@ -486,7 +520,7 @@ def generate_interval():
         height=512,                            # use multiples of 64
         width=384,   
                                 # use multiples of 64
-        audio_filepath=f'./static/audio/{music}.wav',    # Use your own file
+        audio_filepath=f'./static/audio/{music}',    # Use your own file
         audio_start_sec=current_interval_times[0],       # Start second of the provided audio
         fps=fps,                               # important to set yourself based on the num_interpolation_steps you defined
         batch_size=4,                          # increase until you go out of memory.
@@ -527,7 +561,6 @@ def delete_file():
     return
 
 from random import sample
-openai.api_key = "INSERT OPENAI-KEY"
 
 @app.route("/brainstorm", methods=["POST"])
 def brainstorm():
@@ -555,9 +588,8 @@ def brainstorm_gpt():
 
     prompt = f"In 5 words or less, describe an image that symbolizes these lyrics '{goal}':"
     print(prompt)
-    # response1 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-    # response2 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-    # response3 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+
+    regex_pattern = r'(.*)\*\*(.*)\*\*(.*)'
 
     response1 = openai.Completion.create(
         model="text-davinci-003",
@@ -596,6 +628,12 @@ def brainstorm_gpt():
     response1 = response1["choices"][0].text.strip()
     response2 = response2["choices"][0].text.strip()
     response3 = response3["choices"][0].text.strip()
+
+
+    #response1 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+    #response2 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+    #response3 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+
 
     
 
@@ -672,7 +710,7 @@ def generate_images(prompt,seed):
     
     torch.cuda.empty_cache()
     
-    img = pipeline(prompt,num_inference_steps =100, height=512, width=384, batch_size=1, num_batches=1,seed=int(seed))
+    img = pipeline(prompt,num_inference_steps =100, height=56, width=56, batch_size=1, num_batches=1,seed=int(seed))
     return img
 
 
@@ -731,9 +769,10 @@ from collections import OrderedDict
 @app.route("/", methods=["GET","POST"])
 def audio_test():
     global music
+    global video
 
     frames = OrderedDict()
-    video =f"./static/audio/{music}.mp4"
+    # video =f"./static/audio/{music}.mp4"
     videos = []
 
     if os.path.isdir('./static/output'):

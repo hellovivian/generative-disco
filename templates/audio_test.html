@@ -47,8 +47,11 @@
             </button>
         </div>                                     -->
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em;'>
-            <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key">
+            <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
+            <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music"><div id="musicURLUpload" onclick="musicURLchange()" style="background-color:blue">Upload</div>
+
         </div>
+
 
     </div>
 
@@ -87,9 +90,21 @@
                      id="full-form" enctype="multipart/form-data">
 
                         
-                        
 
                         <div class='video_interval'>
+<!-- 
+                            <div style="display:flex; margin-bottom:0.5em;">
+                                <div style='float:right; margin-left: auto; order: 2; '>
+                                    Upload Audio <input type="file" id="upload" />
+                                    <audio id="audio" controls>
+                                        <source src="" id="src" />
+                                      </audio>
+                                </div>
+                                
+
+                            </div> -->
+
+
                             <!-- <div class="interval_action_bar" > -->
                                 <div style="display:flex; flex-direction:row;">
                                 <div id="play-button" class="play-button btn btn-primary btn-block interval-button" onclick="playWaveSurfer()">
@@ -133,15 +148,16 @@
                             <div id="wave-timeline"></div>
                         
                          
-                            <div id="waveform_copy">
-                            
+                        <div id="waveform_container">
+                        
+                        
+                            <div id="waveform">
+                                
                             </div>
-                        <div id="waveform">
-                            
                         </div>
-                        
-                        
+                                                
                         <div style="display:flex;">
+
                             <div style="width:50%; display:flex;">
                                 <input id="description" name="description" class="text-center text-info lyric form-control"  placeholder="Describe Interval">
                             <button  type="button" class="interval-button" style="display: flex" onclick="brainstormGPT()"> 
@@ -608,5 +624,98 @@
             }
 
         </script> -->
+
+        <script>
+            function handleFiles(event) {
+                var files = event.target.files;
+                $("#src").attr("src", URL.createObjectURL(files[0]));
+                document.getElementById("audio").load();
+
+                var file = files[0];
+                // wavesurfer.loadBlob(file);
+                // reloadAudio();
+
+                if (file) {
+                    var reader = new FileReader();
+                    
+
+                    reader.onload = function (evt) {
+                        // Create a Blob providing as first argument a typed array with the file buffer
+                        var blob = new window.Blob([new Uint8Array(evt.target.result)]);
+
+                        // Load the blob into Wavesurfer
+                        wavesurfer.loadBlob(blob);
+                    };
+
+                    reader.onerror = function (evt) {
+                        console.error("An error ocurred reading the file: ", evt);
+                    };
+
+
+                    // Read File as an ArrayBuffer
+                    reader.readAsArrayBuffer(file);
+                }
+
+            }
+
+            document.getElementById("upload").addEventListener("change", handleFiles, false);
+            
+            // $.ajax({
+            //     type: "POST",
+            //     url: '/upload_audio',
+            //     data: JSON.stringify({ 
+                    
+
+            //         'audio_file': $("#audio")[0].children[0].src,
+
+            //     } ),
+            //     processData: false,
+            //     cache: false,
+            //     async: false,
+            //     contentType: 'application/json;charset=UTF-8',
+            //     success: function(data) {
+            
+                    
+            //     },
+            //     error: function (request, status, error) {
+                   
+            //         console.log("Error");
+            
+            //     }
+            // });
+
+            function musicURLchange () {
+                
+
+                $.ajax({
+                type: "POST",
+                url: '/download_audio',
+                data: JSON.stringify({ 
+                    
+
+                    'audio_file': $("#urltomusic")[0].value,
+
+                } ),
+                processData: false,
+                cache: false,
+                async: false,
+                contentType: 'application/json;charset=UTF-8',
+                success: function(data) {
+                    console.log(data["audio_filename"]);
+                    wavesurfer.load(data["audio_filename"]);
+                    
+                },
+                error: function (request, status, error) {
+                   
+                    console.log("Error");
+            
+                }
+            });
+
+            }
+        
+
+        </script>
+
     </body>
 </html>

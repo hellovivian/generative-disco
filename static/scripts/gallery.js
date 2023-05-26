@@ -285,6 +285,7 @@ function brainstorm() {
 }
 
 function brainstormGPT() {
+    
 
     if ($("#openaikey")[0].value != "") {
         $("#loading").show();
@@ -292,11 +293,11 @@ function brainstormGPT() {
             type: "POST",
             url: '/brainstorm_gpt',
             data: JSON.stringify({ 
-
+    
                 'goal': $("#description")[0].value,
-                'openai_api_key': $("#openaikey")[0].value
-            
-
+                'openai_api_key': $("#openaikey")[0].value,
+               
+    
             } ),
             processData: false,
             cache: false,
@@ -304,22 +305,22 @@ function brainstormGPT() {
             contentType: 'application/json;charset=UTF-8',
             success: function(data) {
                 $("#loading").hide();
-            
+               
                 // $(".content")[0].innerHTML = ""
                 
                 $("#startSubject1")[0].innerHTML = data["subject1"];
                 $("#startSubject2")[0].innerHTML = data["subject2"];
                 $("#startSubject3")[0].innerHTML = data["subject3"];
-
-
+    
+    
                 $(".subject_empty").removeClass("subject_empty");
                 brainstorm();
-            
+               
                 // $("#color_end1")[0].value = data[0][1];
                 // $("#angle_end1")[0].value = data[1][1];
                 // $("#time_end1")[0].value = data[2][1];
-
-
+    
+    
                 // "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'> Color transition:"  + data[0] + "<br>"
                 // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Motion transition:"  + data[1] + "<br>"
                 // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Perspective transition:"  + data[2] + "<br>"
@@ -332,8 +333,7 @@ function brainstormGPT() {
             },
             error: function (request, status, error) {
                 $("#loading").hide();
-                alert("Error from GPT.");
-                // brainstormGPT();
+                brainstormGPT();
                 clearInterval(handle);
                 console.log("Error");
                 
@@ -343,6 +343,7 @@ function brainstormGPT() {
     } else {
         alert("Please enter an OpenAI API key in the field on the top right.");
     }
+  
 }
 
 
