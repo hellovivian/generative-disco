@@ -469,6 +469,7 @@ def download_audio():
     print(audio_file)
 
     subprocess.Popen(f"youtube-dl -f bestaudio  --extract-audio --audio-format mp3 --audio-quality 0 -o 'static/audio/{filename}.%(ext)s' {audio_file}", shell=True, stdout=subprocess.PIPE).stdout.read()
+    time.sleep(10)
     subprocess.Popen(f"ffmpeg -f lavfi -i color=c=blue:s=1280x720 -i static/audio/{filename}.mp3 -shortest -fflags +shortest static/audio/{filename}.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
 
     music = f'{filename}.mp3'
