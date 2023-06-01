@@ -25,8 +25,6 @@ import time
 from typing import List, Optional, Tuple, Union
 import random
 
-import subprocess
-
 num_generations = 0
 app = Flask(__name__)
 
@@ -40,9 +38,9 @@ pipeline = StableDiffusionWalkPipeline.from_pretrained(
     safety_checker=None,
     ).to("cuda")
 
-music = './static/audio/clairdelune.wav'
-video = './static/audio/clairdelune.mp4'
-
+# music = 'empirestate_short'
+music = 'clairdelune'
+# music = 'IL'
 def randn_tensor(
     shape: Union[Tuple, List],
     generator: Optional[Union[List["torch.Generator"], "torch.Generator"]] = None,
@@ -171,7 +169,7 @@ def generate_brainstorm_img():
     global num_generations
 
     prompt = request.json["start_prompt"]
-
+    
     
     if request.json["test_seed"]:
         seed = request.json["test_seed"]
@@ -180,6 +178,8 @@ def generate_brainstorm_img():
         
     prompt_and_seed = f"{prompt}_{seed}"
 
+    # prompt2 = request.json["end_prompt"]
+    
     if request.json["test_seed"]:
     
         curr_seed = seed
@@ -237,7 +237,7 @@ def generate_brainstorm_img():
             img=generate_images(prompt,curr_seed)
             img.images[0].save(f"./static/generations/{num_generations-1}_{generation_name}.jpg" , 'JPEG', quality=70)
 
-    return "completed"
+    return ""
 
 @app.route('/receive_img_blob', methods=["POST"])
 def receive_img_blob():
@@ -372,17 +372,23 @@ def call_generate_end():
     img.images[0].save(f"./static/generations/{generation_name}.jpg" , 'JPEG', quality=70)
     img.images[0].save(f"./static/previews/{interval}_end.jpg" , 'JPEG', quality=70)
     
-    return "completed"
+    return "hi"
 
 @app.route('/call_generate', methods=["POST"])
 def call_generate():
     global num_generations
     
     json_data = request.json["json_data"]
+    # print(request.form)
+    # file =request.files['image']
+    # file.save("./savedimage.jpg")
+    # print("saved")
+
+    # print(request.form['interval_num'])
+    # json_data = request.json
 
     
     #call json.loads twice because first call returns string
-
     intervals = json.loads(json.loads(json_data))
     print("entered")
     
@@ -409,24 +415,19 @@ def call_generate():
     img.images[0].save(f"./static/previews/{interval}_start.jpg" , 'JPEG', quality=70)
   
     
-    return "Completed" 
-
-
+    return "hi"
 
 
 def find_video_in_folder():
     audioSrc = request.json["audioSrc"]
     print(audioSrc)
-
-    return "Completed"
-
+    return "hi"
 
 @app.route("/create_placeholder", methods=["POST"])
 def create_placeholder():
     audioSrc = request.json["audioSrc"]
     print(audioSrc)
-    return "Completed"
-
+    return "hi"
 
 @app.route("/replace_preview", methods=["POST"])
 def replace_preview():
@@ -443,8 +444,7 @@ def replace_preview():
     shutil.copy(incoming_img[:-1],f"./static/previews/{interval_num}_{start_or_end}.jpg")
     # shutil.move(incoming_img[:-1], f"./static/previews/{interval_num}_{start_or_end}.jpg")
   
-    return "Completed"
-
+    return "hi"
 
 @app.route("/save_regions", methods=["POST"])
 def save_regions():
@@ -457,32 +457,8 @@ def save_regions():
         json.dump(intervals, f)
         
         f.close()
-    return "Completed"
-
-import string
-
-@app.route("/download_audio", methods=["POST"])
-def download_audio():
-
-    global music
-    global video
-     
-    # printing lowercase
-    letters = string.ascii_lowercase
-    filename = ''.join(random.choice(letters) for i in range(10)) 
-
-    audio_file = request.json["audio_file"] 
-    print(audio_file)
-
-    subprocess.Popen(f"youtube-dl -f bestaudio  --extract-audio --audio-format mp3 --audio-quality 0 -o 'static/audio/{filename}.%(ext)s' {audio_file}", shell=True, stdout=subprocess.PIPE).stdout.read()
-    time.sleep(10)
-    subprocess.Popen(f"ffmpeg -f lavfi -i color=c=blue:s=1280x720 -i static/audio/{filename}.mp3 -shortest -fflags +shortest static/audio/{filename}.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
-
-    music = f'./static/audio/{filename}.mp3'
-    video = f'./static/audio/{filename}.mp4'
-
-    return {"audio_filename":f'./static/audio/{filename}.mp3'}
-
+    return "hi"
+    
 @app.route("/generate_interval", methods=["POST"])
 def generate_interval():
     global pipeline
@@ -515,6 +491,7 @@ def generate_interval():
     intervals = json.loads(json.loads(json_data))
 
 
+
     fps = 24
     num_interpolation_steps = [int((b-a) * fps) for a, b in zip(current_interval_times, current_interval_times[1:])]
     
@@ -529,20 +506,19 @@ def generate_interval():
         height=512,                            # use multiples of 64
         width=512,   
                                 # use multiples of 64
-
-        audio_filepath=f'{music}',    # Use your own file
+        audio_filepath=f'./static/audio/{music}.wav',    # Use your own file
         audio_start_sec=current_interval_times[0],       # Start second of the provided audio
         fps=fps,                               # important to set yourself based on the num_interpolation_steps you defined
         batch_size=4,                          # increase until you go out of memory.
         output_dir='./static/intervals',                 # Where images will be saved
         name=output_name, 
-        num_inference_steps=100                            # Subdir of output dir. will be timestamp by default
+        num_inference_steps=50                            # Subdir of output dir. will be timestamp by default
     )
 
     shutil.move(f"./static/intervals/{output_name}", f"./static/output/")
 
 
-    return "completed"
+    return ""
 
 @app.route("/delete_track", methods=["POST"])
 def delete_track():
@@ -553,12 +529,12 @@ def delete_track():
     relative_path = relative_path.replace("%3E",">")
     # print(relative_path)
     shutil.rmtree( relative_path)
-    return "completed"
+    return "hi"
 
 @app.route("/delete_stitched_video", methods=["POST"])
 def delete_stitched_video():
     os.unlink( "./static/output/stitched_output.mp4")
-    return "completed"
+    return "hi"
 
 @app.route("/delete_file", methods=["POST"])
 def delete_file():
@@ -569,82 +545,51 @@ def delete_file():
     relative_path = relative_path.replace("%20"," ")
     # print(relative_path)
     os.unlink( relative_path[:-1])
-    return "completed"
+    return "hi"
 
 from random import sample
+openai.api_key = "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"
 
 @app.route("/brainstorm", methods=["POST"])
 def brainstorm():
-    color_transitions = ["blue hour", "light leak", "bloom pass", "gaussian blur", "sepia","color inversion", "neon","saturated", "desaturated", "warm","cool", "pastel", "cyberpunk","pop art", "vintage","film photography", "glitch","vignette"]
-    time_transitions = ["sunset", "sunrise", "mosaic", "kaleidoscope", "strobe", "retro", "dreamy", "cartoon", "golden hour", "dramatic lighting", "sunny", "cloudy", "timelapse", "light tunnels","bokeh", "soft lighting","cinematic lighting", "lens flare", "slow motion"]
-    # action_transitions = ["motion blur"]
-    angle_transitions = ["wide angle", "close-up", "birds eye view","midshot", "fisheye","high angle", "dutch angle", "worm's eye view", "straight angle", "low angle", "vortex", "upside down", "side profile","tilted frame","isometric","medium long" ]
-
+    color_transitions = ["blue hour", "light leak", "dark", "muted", "psychedelic", "anaglyph", "polaroid", "geometric", "bloom pass", "gaussian blur", "sepia","color inversion", "neon","saturated", "desaturated", "warm","cool", "pastel", "cyberpunk","pop art", "vintage","film photography", "glitch","vignette"]
+    time_transitions = ["sunset", "sunrise", "mosaic", "kaleidoscope", "storybook illustration", "street photography", "medieval", "cubism", "anime", "pixel art", "digital painting", "collage", "low poly",  "strobe", "retro", "dreamy", "cartoon", "golden hour", "dramatic lighting", "sunny", "cloudy", "timelapse", "light tunnels","bokeh", "soft lighting","cinematic lighting", "lens flare", "slow motion", "painting", "sketch", "photorealism"]
+    angle_transitions = ["wide angle", "close-up", "birds eye view","midshot", "aerial view", "fisheye", "vaporwave", "swirl", "oil painting","Surrealism", "DSLR", "sculpture", "magazine cover", "ink wash painting", "pattern", "map", "Fauvism", "double exposure", "front view", "side view", "high angle", "fractal", "Impressionism", "cubism", "abstract", "dutch angle", "straight angle", "low angle", "vortex", "upside down", "side profile", "3D render", "motion blur", "watercolor", "grunge", "moonlight", "tilted frame","isometric","medium long" ]
+    suggestions = color_transitions + time_transitions + angle_transitions
     
-    color_trio = sample(color_transitions,5)
-    angle_trio = sample(angle_transitions,5)
-    time_trio = sample(time_transitions,5)
+    suggestions = sample(suggestions,15)
+    
 
     return {
-        "color_trio": f"{color_trio[0]},{color_trio[1]}, {color_trio[2]}, {color_trio[3]}, {color_trio[4]}",
-        "angle_trio":f"{angle_trio[0]}, {angle_trio[1]}, {angle_trio[2]}, {angle_trio[3]}, {angle_trio[4]}",
-        "time_trio":f"{time_trio[0]}, {time_trio[1]}, {time_trio[2]}, {time_trio[3]}, {time_trio[4]}"
+        "color_trio": f"{suggestions[0]},{suggestions[1]}, {suggestions[2]}, {suggestions[3]}, {suggestions[4]}",
+        "angle_trio":f"{suggestions[5]}, {suggestions[6]}, {suggestions[7]}, {suggestions[8]}, {suggestions[9]}",
+        "time_trio":f"{suggestions[10]}, {suggestions[11]}, {suggestions[12]}, {suggestions[13]}, {suggestions[14]}"
+        #  ( "," + color_pair[0], goal + "," + color_pair[1]), (goal + "," + angle_pair[0], goal + "," + angle_pair[1]), (goal + "," + time_pair[0], goal + "," + time_pair[1])
     }
 
 @app.route("/brainstorm_gpt", methods=["POST"])
 def brainstorm_gpt():
-    openai.api_key = request.json["openai_api_key"]
-    
     goal = request.json["goal"]
-
-    prompt = f"In 5 words or less, describe an image that symbolizes these lyrics '{goal}':"
+    # restart_sequence = "\n\nQ: "
+    prompt = f"In 5 words or less, describe an image to go with these words '{goal}':"
     print(prompt)
+    response1 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+    response2 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
+    response3 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
 
-    regex_pattern = r'(.*)\*\*(.*)\*\*(.*)'
+    # response = openai.Completion.create(
+    # model="gpt-3.5-turbo",
+    # prompt= prompt,
+    # temperature=0,
+    # max_tokens=20,
+    # top_p=1,
+    # frequency_penalty=0,
+    # presence_penalty=0
+    # )
+    # completion = response["choices"][0].text.strip()
 
-    response1 = openai.Completion.create(
-        model="text-davinci-003",
-        prompt= prompt,
-        temperature=0,
-        max_tokens=72,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-        n=1
-
-        )
-    response2 = openai.Completion.create(
-        model="text-davinci-003",
-        prompt= prompt,
-        temperature=1,
-        max_tokens=72,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-        n=1
-
-        )
-    response3 = openai.Completion.create(
-        model="text-davinci-003",
-        prompt= prompt,
-        temperature=2,
-        max_tokens=72,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-        n=1
-
-        )
-
-    response1 = response1["choices"][0].text.strip()
-    response2 = response2["choices"][0].text.strip()
-    response3 = response3["choices"][0].text.strip()
-
-
-    #response1 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-    #response2 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-    #response3 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-
+  
+    # Prints list of random items of given length
 
     
 
@@ -653,6 +598,7 @@ def brainstorm_gpt():
         "subject2": response2,
         "subject3":response3,
        
+        #  ( "," + color_pair[0], goal + "," + color_pair[1]), (goal + "," + angle_pair[0], goal + "," + angle_pair[1]), (goal + "," + time_pair[0], goal + "," + time_pair[1])
     }
 
 @app.route("/stitch_videos", methods=["POST"])
@@ -670,7 +616,7 @@ def stitch_videos():
     print(video_clips)
     final = concatenate_videoclips(video_clips)
     final.write_videofile("./static/output/stitched_output.mp4")
-    return "completed"
+    return "hi"
 
 
 
@@ -761,7 +707,7 @@ def generate_video():
     #     )
     #     shutil.move(f"./static/{interpolation_request['name']}", f"./static/output/")
 
-    return "completed"
+    return "hi"
 
 
 """
@@ -788,9 +734,8 @@ def generate_images(prompt,seed):
     
     torch.cuda.empty_cache()
     
-
+    # if we are capped at 512x512 that is problematic
     img = pipeline(prompt,num_inference_steps =50, height=512, width=512, batch_size=1, num_batches=1,seed=int(seed))
-
     return img
 
 
@@ -870,10 +815,9 @@ from collections import OrderedDict
 @app.route("/", methods=["GET","POST"])
 def audio_test():
     global music
-    global video
 
     frames = OrderedDict()
-    # video =f"./static/audio/{music}.mp4"
+    video =f"./static/audio/{music}.mp4"
     videos = []
 
     if os.path.isdir('./static/output'):
@@ -884,6 +828,7 @@ def audio_test():
         
         
         output_files = next(os.walk("./static/output/"))[2]
+        print(interval_folder_names)
       
         
         for folder_name in interval_folder_names:
@@ -893,6 +838,14 @@ def audio_test():
             frames[folder_name]["interval_frames"] = sorted(folder_files_by_ext(folder_path,"*.png"))
             frames[folder_name]["interval_frames"] = sorted([frame[9:] for frame in frames[folder_name]["interval_frames"] ])
             frames[folder_name]["interval_video"] = folder_files_by_ext(folder_path,"*.mp4")[0]
+        # print(frames["interval_2"]["interval_video"])
+        
+        # THIS IS THE INPUT
+        # video = [f"./static/output/" + video_file for video_file in output_files if video_file[-4:] == '.mp4'][0]
+        
+  
+        
+        # video = "./static/audio/input.mp4"
 
         videos = folder_files_by_ext("./static/output/","*.mp4")
         if "./static/output/stitched_output.mp4" in videos:
