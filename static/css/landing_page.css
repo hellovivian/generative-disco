@@ -131,7 +131,12 @@ h3 {
   
 }
 
-.generated_image:active {
+#deleteVideo {
+ float:right;
+ border: solid 1px black;
+ border-radius:0.25em;
+}
+.generated_image.generated_image_active {
   width: 300px;
   transition: all 1s ease;
   
@@ -140,6 +145,7 @@ h3 {
 
 #loading {
   width: 100%;
+
   height: 10%;
   display: none;
   position: fixed;
@@ -149,7 +155,8 @@ h3 {
   background-image: url('https://i.pinimg.com/originals/05/91/c7/0591c7d9ed972c451f02e9d52199f1d6.gif');
   background-blend-mode: darken;
   opacity: 0.75;
-  background-repeat:repeat;
+  /* background-repeat:repeat;0 */
+  background-size:contain;
 }
 
 #loading_gif {
@@ -475,7 +482,7 @@ h3 {
 }
 
 .promptparams {
-  max-height:2em;
+  max-height:2.8em;
 }
 
 label {
@@ -604,7 +611,7 @@ hr { border: 0; clear:both; display:block; width: 96%; background-color:deeppink
   /* float: right; */
   /* border: solid 1px deeppink; */
   background-color: royalblue;
-  padding: 0.25em;
+  padding: 0.5em;
   border: 0;
   border-radius: 0.25em;
   min-height: 32px;
@@ -644,7 +651,6 @@ hr { border: 0; clear:both; display:block; width: 96%; background-color:deeppink
 #end_prompt_area{
   float:right;
 }
-
 
 
 /* 
@@ -720,6 +726,17 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_rangeslider_pic
   width:100%;
 } */
 
+button {
+  margin:0.25em;
+  min-height:32px;
+  padding:0.25em;
+}
+
+button p {
+  vertical-align: middle;
+
+}
+
 .preview_container {
   width:100%;
   height:100%;
@@ -728,6 +745,7 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_rangeslider_pic
 .video_area {
   display:flex; flex-direction:column;
   background-color:white;
+  width:100%;
 }
 .container {
   float:left;
@@ -743,8 +761,25 @@ https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_js_rangeslider_pic
   /* filter: drop-shadow(0 0 0.15rem #dddddd); */
 }
 
+button img {
+  margin-right:0.5em;
+  margin-left:0.25em;
+
+}
 .play-button {
   background-color:deeppink;
+  height:42px;
+  width:150px;
+  margin-top:3px;
+}
+
+#play {
+  margin-top:5px;
+
+}
+
+#pause {
+  margin-top:5px;
 }
 
 

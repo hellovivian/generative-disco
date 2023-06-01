@@ -107,7 +107,7 @@
 
                             <!-- <div class="interval_action_bar" > -->
                                 <div style="display:flex; flex-direction:row;">
-                                <div id="play-button" class="play-button btn btn-primary btn-block interval-button" onclick="playWaveSurfer()">
+                                <div id="play-button" class="play-button btn  btn-primary interval-button" onclick="playWaveSurfer()">
                                     <span id="play">
                                         <i class="glyphicon glyphicon-play"></i>
                                         Play
@@ -119,20 +119,27 @@
                                     </span>
                                 </div> 
                                 <button type="button" class="" onclick="addInterval()">
-                                   
+                                    <img width='24px' src="https://static.thenounproject.com/png/2577717-200.png"> 
                                    ADD INTERVAL
+                                  
+                                  
                                 </button>
-                               <button type="button" class="" onclick='deleteRegion()'> DELETE
-                                <img width='24px'  src="./static/images/trash.png">
+                               
+                                <button type="button" class="" onclick='deleteRegion()'>
+                                    <img width='32px'  src="./static/images/trash.png">
+                                    DELETE
+                                
                                </button>
                                <button type="button" class="button" onclick="saveRegions()">
-                                SAVE
+                             
                                  <img width='24px' src="https://icons.veryicon.com/png/o/miscellaneous/utility/save-44.png">
+                                 SAVE
                                 </button>
-                                <button type="button" class="button" onclick="alignIntervals()">
-                                    ALIGN INTERVALS
-                                     <img width='24px' src="https://icons.veryicon.com/png/o/miscellaneous/utility/save-44.png">
-                                    </button>
+                                <!-- <button type="button" class="button" onclick="alignIntervals()">
+                            
+                                     <img width='24px' src="http://cdn.onlinewebfonts.com/svg/img_2532.png">
+                                     ALIGN INTERVALS
+                                    </button> -->
 
                                 
                             </div>
@@ -162,8 +169,8 @@
                                 <input id="description" name="description" class="text-center text-info lyric form-control"  placeholder="Describe Interval">
                             <button  type="button" class="interval-button" style="display: flex" onclick="brainstormGPT()"> 
                                 
-                                <img width='24px' src="https://cdn-icons-png.flaticon.com/512/118/118063.png">
-                                <p>BRAINSTORM</p>
+                                <img width='24px' src="https://cdn-icons-png.flaticon.com/128/5038/5038742.png">
+                                <span style="margin: 5px 0px 0px 0px">BRAINSTORM 
                             </button>
                             </div>
                             <div style="display:flex; width:15%">
@@ -286,7 +293,7 @@
                              
                                     <!-- <img width='24px' src="https://www.pngkit.com/png/full/333-3335263_browser-history-clock-icon-vector-white.png"> -->
                                     <div class="generate_preview_title">
-                                        <h5  >BRAINSTORMING AREA <img width='18px' src="https://cdn-icons-png.flaticon.com/512/118/118063.png" onclick="brainstorm()"> </h5>     
+                                        <h5  > <img width='28px' style="margin-left:0.25em; margin-right:1em" src="https://cdn-icons-png.flaticon.com/512/3521/3521848.png" onclick="brainstorm()">BRAINSTORMING AREA </h5>     
                                     </div>
                                    
                                 
@@ -444,8 +451,8 @@
 
                                                 <input type="text" id="test_seed" placeholder='Seed (optional)' class="form-control" rows="1" name="test_seed">
                                                 <button type="button" class="btn preview-btn" onclick=" generateBrainstormImg();">
-                                                    <img width='24px'  src="./static/images/dice.png">
-                                                    GEN PREVIEWS</button>
+                                                    <img width='32px'  src="https://cdn-icons-png.flaticon.com/128/3971/3971176.png">
+                                                    PREVIEW IMG</button>
                                             </div>
                                             
 
@@ -483,7 +490,7 @@
                                 
                                                 </div>
                                     
-                                                <img draggable="true" ondragstart="drag(event)"  id={{generation[1]}} class="generated_image" onclick="changeFramePreview(this)" alt={{generation[13:-5]}}  title={{generation[13:-5]}} src={{url_for('static', filename=generation[0])}}/>
+                                                <img draggable="true" ondragstart="drag(event)"  id={{generation[1]}} class="generated_image" onclick="generatedImageClick(this)" alt={{generation[13:-5]}}  title={{generation[13:-5]}} src={{url_for('static', filename=generation[0])}}/>
                                                 <img class="generation_action_button" onclick="varyImage(this);" width='32px' src="https://cdn2.iconfinder.com/data/icons/media-player-ui/512/Media-Icon-21-512.png"/>
 
                                                 
@@ -519,12 +526,24 @@
             <div id="page_right_container" class="ui_region">
                 
                 <div class="video_area">
-                    <h4>Video Area </h4>
-                    <video style="margin: 0 auto;" id="input_video" src={{output_video}} type="video/mpeg" onclick="playRegionVideo(this)"> 
+                    <div style="display:flex; flex-direction: row">
+                        <h4 >Video Area </h4>   
+                    <div style="width:70%; position: relative; top:1em; ">  
+                        <img id="deleteVideo" onclick="deleteStitchedVideo()" width='32px' src={{url_for('static', filename='images/trash.png')}}/>
+                     </div>
+                    </div>
+                    
 
+
+                        <video style="margin: 0 auto;" id="input_video" src={{output_video}} type="video/mpeg" onclick="playRegionVideo(this)"> 
+
+               
+                    
                     
                     </video>
+
                     <img id="deleteVideo" onclick="deleteStitchedVideo()" width='32px' src="https://cdn-icons-png.flaticon.com/512/3515/3515498.png"/>
+
 
                     <!-- <button class="play-button btn btn-primary btn-block interval-button" data-action="play2">
                         <span id="playvid2">

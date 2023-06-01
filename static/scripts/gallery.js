@@ -361,6 +361,12 @@ function openHistory(element) {
     }
 }
 
+function generatedImageClick(elem ) {
+    console.log(elem);
+
+    $(elem).toggleClass("generated_image_active");
+
+}
 
 
 function changePromptFocus(elem) {
