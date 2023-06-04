@@ -670,7 +670,7 @@ def stitch_videos():
     print(video_clips)
     final = concatenate_videoclips(video_clips)
     final.write_videofile("./static/output/stitched_output.mp4")
-    time.sleep(5)
+    time.sleep(10)
     return "completed"
 
 
