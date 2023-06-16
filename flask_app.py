@@ -670,7 +670,7 @@ def stitch_videos():
     print(video_clips)
     final = concatenate_videoclips(video_clips)
     final.write_videofile("./static/output/stitched_output.mp4", audio=True, temp_audiofile='./static/output/temp-audio.m4a', 
-  remove_temp=True)
+  remove_temp=False)
     time.sleep(10)
     return "completed"
 
