@@ -10,7 +10,9 @@ Visuals are a core part of our experience of music. However, creating music visu
 
 ## How to Use
 <a href='https://youtu.be/q22I53jHbuU?t=59'> Demo of System </a> <br><br>
-<img width="655" alt="Screenshot 2023-06-25 at 10 44 21 AM" src="https://github.com/hellovivian/generative-disco/assets/15935546/3bf09f07-e1ce-4272-84aa-8e255b44ade6">
+
+![ezgif com-video-to-gif (21)](https://github.com/hellovivian/generative-disco/assets/15935546/c26ec110-9494-41e0-a31f-88b1f0dd0ead)
+
 
 
 The only way the demo differs from the video is that it includes fields for `OpenAI Key` and `Soundcloud URL to Music`. These functions are intended for if you would like to use Disco in a more dedicated way. HuggingFace Spaces allows many people to edit the same space at once, so duplicate / clone the space if you would like to persist your work. <br><br>
