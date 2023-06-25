@@ -1,6 +1,6 @@
 # 🪩 generative disco
 
-🏗️ Open-sourcing efforts in progress. Check mid-May 2023. 🌷
+June'23 Update: Hugging Face Spaces demo available here: [vivlavida/generative-disco](https://huggingface.co/spaces/vivlavida/generative-disco) 🌷
 
 ![GenDisco](https://user-images.githubusercontent.com/15935546/235154270-3c9d42df-ac39-4472-b0d5-c1e5ae9eb228.gif)
 
