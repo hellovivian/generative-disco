@@ -8,8 +8,27 @@ June'23 Update: Hugging Face Spaces demo available here: [vivlavida/generative-d
 
 Visuals are a core part of our experience of music. However, creating music visualization is a complex, time-consuming, and resource-intensive process. We introduce Generative Disco, a generative AI system that helps generate music visualizations with large language models and text-to-image models. Users select intervals of music to visualize and then parameterize that visualization by defining start and end prompts. These prompts are warped between and generated according to the beat of the music for audioreactive video. We introduce design patterns for improving generated videos: "transitions", which express shifts in color, time, subject, or style, and "holds", which encourage visual emphasis and consistency.
 
+## How to Use
+<a href='https://youtu.be/q22I53jHbuU?t=59'> Demo of System </a> <br><br>
+<img width="655" alt="Screenshot 2023-06-25 at 10 44 21 AM" src="https://github.com/hellovivian/generative-disco/assets/15935546/3bf09f07-e1ce-4272-84aa-8e255b44ade6">
+
+
+The only way the demo differs from the video is that it includes fields for `OpenAI Key` and `Soundcloud URL to Music`. These functions are intended for if you would like to use Disco in a more dedicated way. HuggingFace Spaces allows many people to edit the same space at once, so duplicate / clone the space if you would like to persist your work. <br><br>
+The `OpenAI Key` field is only necessary if you want to use the Brainstorming `Describe Interval` function, which retrieves inspiration for different subjects of prompts using GPT-3. We pass the `OpenAI Key` as an argument for an API call. <br><br>
+The `Soundcloud URL to Music` allows you to change the music file. <br><br>
+
+### Notes
+<ul>
+      <li>All fields have to be filled out in the form (Interval #) for the generation to begin.</li>
+</ul>
+
+While video intervals are generating you can check the progress by looking at the Logs tab. Generating even a few seconds of content on the community GPU may take awhile, so we recommend generating in very short intervals (like 0.5 seconds at a time).
+<img width="655" alt="Screenshot 2023-06-25 at 10 16 19 AM" src="https://github.com/hellovivian/generative-disco/assets/15935546/61d28bce-fb16-499b-8014-179043c642da">
+
+
+
 ## Links
-<a href='https://youtu.be/q22I53jHbuU'> Youtube video </a> <br><br>
+<a href='https://youtu.be/q22I53jHbuU'> Full Youtube video </a> <br><br>
 <a href='https://arxiv.org/abs/2304.08551'> arXiv Preprint </a>
 
 ## Examples
