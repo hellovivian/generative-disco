@@ -18,13 +18,16 @@
 
   
         <!-- wavesurfer -->
-        <script src="https://unpkg.com/wavesurfer.js/dist/wavesurfer.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/7.3.2/wavesurfer.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/7.3.2/plugins/minimap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/7.3.2/plugins/regions.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/7.3.2/plugins/timeline.min.js"></script>
 
         <!-- plugins -->
-        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.timeline.js"></script>
-        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.regions.js"></script>
-        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.minimap.js"></script>
-        <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.cursor.js"></script>
+        <!-- 
+        
+         -->
+        <!-- <script src="https://unpkg.com/wavesurfer.js/dist/plugin/wavesurfer.cursor.js"></script> -->
 
         <!-- Demo -->
         <script src="./static/scripts/main_trivia.js"></script>
@@ -48,8 +51,12 @@
         </div>                                     -->
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
-            <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music (Soundcloud)"><div id="musicURLUpload" onclick="musicURLchange()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Change Music</div>
+            <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music">
+            <input id="music_start" name="music_start" class="text-center text-info form-control"  placeholder="Music Start">
+            <input id="music_length" name="music_length" class="text-center text-info form-control"  placeholder="Music Length">
 
+            <div id="musicURLUpload" onclick="musicURLchange()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Change Music</div>
+            
         </div>
 
 
@@ -677,7 +684,7 @@
 
             }
 
-            document.getElementById("upload").addEventListener("change", handleFiles, false);
+            // document.getElementById("upload").addEventListener("change", handleFiles, false);
             
             // $.ajax({
             //     type: "POST",
@@ -713,6 +720,10 @@
                     
 
                     'audio_file': $("#urltomusic")[0].value,
+                    'music_start': $("#music_start")[0].value,
+
+                    'music_length': $("#music_length")[0].value,
+
 
                 } ),
                 processData: false,

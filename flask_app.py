@@ -473,10 +473,16 @@ def download_audio():
 
     audio_file = request.json["audio_file"] 
     print(audio_file)
+    music_start = request.json["music_start"] 
+    print(music_start)
+
+    music_length = request.json["music_length"] 
+    print(music_length)
+
 
     subprocess.Popen(f"youtube-dl -f bestaudio  --extract-audio --audio-format mp3 --audio-quality 0 -o 'static/audio/{filename}.%(ext)s' {audio_file}", shell=True, stdout=subprocess.PIPE).stdout.read()
     time.sleep(10)
-    subprocess.Popen(f"ffmpeg -f lavfi -i color=c=blue:s=1280x720 -i static/audio/{filename}.mp3 -shortest -fflags +shortest static/audio/{filename}.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
+    subprocess.Popen(f"ffmpeg -ss 00:{music_start} -t {music_length} -f lavfi -i color=c=blue:s=1280x720 -i static/audio/{filename}.mp3 -shortest -fflags +shortest static/audio/{filename}.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
 
     music = f'./static/audio/{filename}.mp3'
     video = f'./static/audio/{filename}.mp4'
@@ -669,9 +675,7 @@ def stitch_videos():
     video_clips = [VideoFileClip(path.replace("%3E",">")) for path in relative_paths]
     print(video_clips)
     final = concatenate_videoclips(video_clips)
-    final.write_videofile("./static/output/stitched_output.mp4", audio=True, temp_audiofile='./static/output/temp-audio.mp3', audio_codec = 'libmp3lame', 
-  remove_temp=False)
-    time.sleep(10)
+    final.write_videofile("./static/output/stitched_output.mp4", rewrite_audio=False, audio=False)
     return "completed"
 
 

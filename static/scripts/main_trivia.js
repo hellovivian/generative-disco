@@ -2,7 +2,7 @@ let ws = window.wavesurfer;
 
 let interval_counter = 0;
 
-const colors = ['rgba(200,25,25,0.5)', 'rgba(0,25,25,0.5)'];
+const colors = ['rgba(90,225,225,0.5)', 'rgba(178, 178, 178, 0.47)'];
 
 var GLOBAL_ACTIONS = { // eslint-disable-line
     play: function() {
@@ -11,6 +11,12 @@ var GLOBAL_ACTIONS = { // eslint-disable-line
 
 
 };
+
+function getIntervalColor() {
+    interval_counter+=1;
+    return colors[interval_counter % colors.length];
+
+}
 
 // Bind actions to buttons and keypresses
 document.addEventListener('DOMContentLoaded', function() {
@@ -98,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
         backend: 'MediaElement',
         plugins: [
 
-            WaveSurfer.regions.create({
+            WaveSurfer.Regions.create({
    
                 regions: [
 
@@ -108,15 +114,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }),
 
-            WaveSurfer.timeline.create({
+            WaveSurfer.Timeline.create({
                 container: '#wave-timeline'
-            }),
-            WaveSurfer.cursor.create()
+            })
+            // WaveSurfer.cursor.create()
         ]
     });
 
     // Load audio from existing media element
-    let mediaElt = $("#input_video")[0];
+    let mediaElt = $("#input_video")[0].src;
 
     wavesurfer.on('error', function(e) {
         console.warn(e);
@@ -130,7 +136,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         wavesurfer.enableDragSelection({
             color: randomColor(0.5)
+            
         });
+        
 
         wavesurfer.util
             .fetchFile({
@@ -156,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
     wavesurfer.on('region-click', function(region, e) {
         
         editAnnotation(region);
-        saveRegions();
+        saveRegions(); 
         e.stopPropagation();
         // Play on click, loop on shift click
         e.shiftKey ? region.play: region.play();
@@ -306,8 +314,8 @@ $(document).ready(function() {
  */
 function loadRegions(regions) {
     regions.forEach(function(region) {
-        // region.color = randomColor(0.25);
-        region.color = colors[interval_counter % colors.length];
+        region.color = randomColor(0.25);
+        // region.color = colors[interval_counter % colors.length];
         wavesurfer.addRegion(region);
         interval_counter++;
 
@@ -586,6 +594,7 @@ function alignIntervals() {
 
 function addInterval() {
     wavesurfer.addRegion({start:wavesurfer.getCurrentTime(), end:wavesurfer.getCurrentTime()+1.0});
+    interval_counter++;
 
 }
 
@@ -593,4 +602,22 @@ function addInterval() {
 function transferLyric(elem) {
     $("#goal_info")[0].value =elem.innerText;
     brainstormGPT();
+}
+
+
+function reloadAudio() {
+
+
+
+    // Load audio from existing media element
+    let mediaElt = $("#audio")[0];
+    console.log(mediaElt);
+    
+
+    wavesurfer.load( $("#audio")[0]);
+    
+
+    alert("end of function");
+    alert(wavesurfer);
+
 }
