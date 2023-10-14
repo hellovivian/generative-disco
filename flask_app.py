@@ -682,7 +682,7 @@ def stitch_videos():
     video_clips = [VideoFileClip(path.replace("%3E",">")) for path in relative_paths]
     print(video_clips)
     final = concatenate_videoclips(video_clips)
-    final.write_videofile("./static/output/stitched_output.mp4", rewrite_audio=False, audio=False)
+    final.write_videofile("./static/output/stitched_output.mp4", audio_codec='aac', rewrite_audio=False, audio=False)
     return "completed"
 
 
