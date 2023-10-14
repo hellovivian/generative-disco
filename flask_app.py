@@ -491,7 +491,7 @@ def download_audio():
 
     # subprocess.Popen(f"ffmpeg -ss {music_start} -t {music_length} -f lavfi -i color=c=blue:s=100x720 -i sample.wav -shortest -fflags +shortest static/audio/music.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
 
-    music = f'./static/audio/{filename}.mp3'
+    music = f'./static/audio/{filename}.wav'
     video = f'./static/audio/music.mp4'
 
     return {"audio_filename":f'./static/audio/{filename}.wav'}
