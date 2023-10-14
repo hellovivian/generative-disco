@@ -482,12 +482,19 @@ def download_audio():
 
     subprocess.Popen(f"youtube-dl -f bestaudio  --extract-audio --audio-format mp3 --audio-quality 0 -o 'static/audio/{filename}.%(ext)s' {audio_file}", shell=True, stdout=subprocess.PIPE).stdout.read()
     time.sleep(10)
-    subprocess.Popen(f"ffmpeg -ss 00:{music_start} -t {music_length} -f lavfi -i color=c=blue:s=1280x720 -i static/audio/{filename}.mp3 -shortest -fflags +shortest static/audio/{filename}.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
+    subprocess.Popen(f"ffmpeg -i 'static/audio/{filename}.mp3' -acodec pcm_u8 -ar 22050 static/audio/sample.wav", shell=True, stdout=subprocess.PIPE).stdout.read()
+    time.sleep(10)
+    # ffmpeg -ss 23 -i sample.wav -t 10 -c:a copy static/audio/trimmed_sample.wav
+
+    subprocess.Popen(f"ffmpeg -y -ss {music_start} -i static/audio/sample.wav -t {music_length} -c:a copy ./static/audio/{filename}.wav", shell=True, stdout=subprocess.PIPE).stdout.read()
+    # ffmpeg -ss 23 -i sample.wav -t 10 -c:v copy -c:a aac -strict experimental -shortest music.mp4
+
+    # subprocess.Popen(f"ffmpeg -ss {music_start} -t {music_length} -f lavfi -i color=c=blue:s=100x720 -i sample.wav -shortest -fflags +shortest static/audio/music.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
 
     music = f'./static/audio/{filename}.mp3'
-    video = f'./static/audio/{filename}.mp4'
+    video = f'./static/audio/music.mp4'
 
-    return {"audio_filename":f'./static/audio/{filename}.mp3'}
+    return {"audio_filename":f'./static/audio/{filename}.wav'}
 
 @app.route("/generate_interval", methods=["POST"])
 def generate_interval():
@@ -533,7 +540,7 @@ def generate_interval():
         seeds=[ int(curr_interval_seed), int(ending_seed)],
         num_interpolation_steps= num_interpolation_steps,
         height=512,                            # use multiples of 64
-        width=512,   
+        width=2,   
                                 # use multiples of 64
 
         audio_filepath=f'{music}',    # Use your own file
@@ -795,7 +802,7 @@ def generate_images(prompt,seed):
     torch.cuda.empty_cache()
     
 
-    img = pipeline(prompt,num_inference_steps =50, height=512, width=512, batch_size=1, num_batches=1,seed=int(seed))
+    img = pipeline(prompt,num_inference_steps =50, height=512, width=256, batch_size=1, num_batches=1,seed=int(seed))
 
     return img
 
