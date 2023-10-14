@@ -540,7 +540,7 @@ def generate_interval():
         seeds=[ int(curr_interval_seed), int(ending_seed)],
         num_interpolation_steps= num_interpolation_steps,
         height=512,                            # use multiples of 64
-        width=2,   
+        width=256,   
                                 # use multiples of 64
 
         audio_filepath=f'{music}',    # Use your own file
