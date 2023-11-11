@@ -486,15 +486,16 @@ def download_audio():
     time.sleep(10)
     # ffmpeg -ss 23 -i sample.wav -t 10 -c:a copy static/audio/trimmed_sample.wav
 
+
     subprocess.Popen(f"ffmpeg -y -ss {music_start} -i static/audio/sample.wav -t {music_length} -c:a copy ./static/audio/{filename}.wav", shell=True, stdout=subprocess.PIPE).stdout.read()
     # ffmpeg -ss 23 -i sample.wav -t 10 -c:v copy -c:a aac -strict experimental -shortest music.mp4
 
     # subprocess.Popen(f"ffmpeg -ss {music_start} -t {music_length} -f lavfi -i color=c=blue:s=100x720 -i sample.wav -shortest -fflags +shortest static/audio/music.mp4", shell=True, stdout=subprocess.PIPE).stdout.read()
 
-    music = f'./static/audio/{filename}.wav'
+    music = f'./static/audio/{filename}.mp3'
     video = f'./static/audio/music.mp4'
 
-    return {"audio_filename":f'./static/audio/{filename}.wav'}
+    return {"audio_filename":f'./static/audio/{filename}.mp3'}
 
 @app.route("/generate_interval", methods=["POST"])
 def generate_interval():
