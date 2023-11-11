@@ -52,10 +52,12 @@
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
             <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music">
+            
             <input id="music_start" name="music_start" class="text-center text-info form-control"  placeholder="Music Start">
             <input id="music_length" name="music_length" class="text-center text-info form-control"  placeholder="Music Length">
 
-            <div id="musicURLUpload" onclick="musicURLchange()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Change Music</div>
+            <div id="musicURLUpload" onclick="musicURLchange()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Download Music</div>
+            <div id="reloadMusic" onclick="reloadMusic()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Reload Music</div>
             
         </div>
 
@@ -743,7 +745,19 @@
             });
 
             }
-        
+            
+
+            function reloadMusic() {
+                reloadMusic: $("#reloadMusic")[0].value,
+                console.log("./static/audio/" + reloadMusic);
+
+                mediaElt = "./static/audio/" + reloadMusic;
+                wavesurfer.load(mediaElt);
+                
+
+                // mediaElt
+
+            }
 
         </script>
 
