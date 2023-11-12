@@ -40,8 +40,8 @@ pipeline = StableDiffusionWalkPipeline.from_pretrained(
     safety_checker=None,
     ).to("cuda")
 
-music = './static/audio/SELENERS.wav'
-video = './static/audio/SELENERS.mp4'
+music = './static/audio/ny_short.wav'
+video = './static/audio/ny_short.mp4'
 
 def randn_tensor(
     shape: Union[Tuple, List],
@@ -818,7 +818,7 @@ def generate_images(prompt,seed):
     torch.cuda.empty_cache()
     
 
-    img = pipeline(prompt,num_inference_steps =50, height=512, width=256, batch_size=1, num_batches=1,seed=int(seed))
+    img = pipeline(prompt,num_inference_steps =50, height=512, width=512, batch_size=1, num_batches=1,seed=int(seed))
 
     return img
 
