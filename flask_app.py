@@ -40,8 +40,8 @@ pipeline = StableDiffusionWalkPipeline.from_pretrained(
     safety_checker=None,
     ).to("cuda")
 
-music = './static/audio/clairdelune.wav'
-video = './static/audio/clairdelune.mp4'
+music = './static/audio/baby_shark.wav'
+video = './static/audio/baby_shark.mp4'
 
 def randn_tensor(
     shape: Union[Tuple, List],
@@ -460,6 +460,21 @@ def save_regions():
     return "Completed"
 
 import string
+
+@app.route("/change_audio", methods=["POST"])
+def change_audio():
+
+    global music
+    global video
+
+    audio_file = request.json["audio_file"] 
+    video_file = request.json["video_file"] 
+
+    music = f'./static/audio/{audio_file}'
+    video = f'./static/audio/{video_file}'
+
+    return {"audio_filename":music}
+
 
 @app.route("/download_audio", methods=["POST"])
 def download_audio():

@@ -750,12 +750,35 @@
             function reloadMusic() {
                 reloadMusic: $("#reloadMusic")[0].value,
                 console.log("./static/audio/" + reloadMusic);
-
                 mediaElt = "./static/audio/" + reloadMusic;
                 wavesurfer.load(mediaElt);
                 
 
-                // mediaElt
+                $.ajax({
+                type: "POST",
+                url: '/change_audio',
+                data: JSON.stringify({ 
+                    
+                    'audio_file': $("#reloadMusic")[0].value,
+
+
+                } ),
+                processData: false,
+                cache: false,
+                async: false,
+                contentType: 'application/json;charset=UTF-8',
+                success: function(data) {
+                    console.log(data["audio_filename"]);
+                    wavesurfer.load(data["audio_filename"]);
+                    
+                },
+                error: function (request, status, error) {
+                   
+                    console.log("Error");
+            
+                }
+            });
+
 
             }
 
