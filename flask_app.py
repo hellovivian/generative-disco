@@ -34,14 +34,14 @@ num_intervals = 0
 
 
 pipeline = StableDiffusionWalkPipeline.from_pretrained(
-    "CompVis/stable-diffusion-v1-4",
+    "RunwayML/stable-diffusion-v1-5",
     torch_dtype=torch.float16,
     revision="fp16",
     safety_checker=None,
     ).to("cuda")
 
-music = './static/audio/baby_shark.wav'
-video = './static/audio/baby_shark.mp4'
+music = './static/audio/SELENERS.wav'
+video = './static/audio/SELENERS.mp4'
 
 def randn_tensor(
     shape: Union[Tuple, List],
@@ -556,7 +556,7 @@ def generate_interval():
         seeds=[ int(curr_interval_seed), int(ending_seed)],
         num_interpolation_steps= num_interpolation_steps,
         height=512,                            # use multiples of 64
-        width=256,   
+        width=512,   
                                 # use multiples of 64
 
         audio_filepath=f'{music}',    # Use your own file
