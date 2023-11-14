@@ -948,6 +948,16 @@ def audio_test():
     generations = [("generations/" + generation_filename, generation_filename.replace(" ", "_").replace(",","-")) for generation_filename in generations]
     return render_template("audio_test.html", frames=frames, videos = videos, output_video = video, generations = generations)
 
+@app.route("/register_music_change", methods=["POST"])
+def register_music_change():
+    global music
+    global video
+    music = request.json["music_choice"]
+    print(music)
+    
+    return "completed"
+
+
 def run():
 
     app.run(host='0.0.0.0', threaded=True, debug=True, port = 7860)

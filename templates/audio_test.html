@@ -51,13 +51,22 @@
         </div>                                     -->
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
-            <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music">
-            
-            <input id="music_start" name="music_start" class="text-center text-info form-control"  placeholder="Music Start">
-            <input id="music_length" name="music_length" class="text-center text-info form-control"  placeholder="Music Length">
+            <!-- <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music"> -->
+            <label for="music_dropdown">Song:</label>
+            <select id="music_dropdown" onchange="musicChange()" name="music_dropdown">
+            <option value="clairdelune.wav">Clair de Lune</option>
+            <option value="cardigan.mp3">Cardigan-Taylor Swift</option>
+            <option value="ny_short.m4a">Empire State of Mind</option>
+            <option value="seleners.wav">Beauty and a Beat-JB</option>
+            <option value="baby_shark.m4a">Baby Shark</option>
 
-            <div id="musicURLUpload" onclick="musicURLchange()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Download Music</div>
-            <div id="reloadMusic" onclick="reloadMusic()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Reload Music</div>
+            </select>
+            
+            <!-- <input id="music_start" name="music_start" class="text-center text-info form-control"  placeholder="Music Start"> -->
+            <!-- <input id="music_length" name="music_length" class="text-center text-info form-control"  placeholder="Music Length"> -->
+
+            <!-- <div id="musicURLUpload" onclick="musicURLchange()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Download Music</div> -->
+            <!-- <div id="reloadMusic" onclick="reloadMusic()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Reload Music</div> -->
             
         </div>
 
@@ -780,6 +789,42 @@
             });
 
 
+            }
+
+            function musicChange() {
+
+            //Get the select select list and store in a variable
+            var e = $("#music_dropdown")[0];
+
+            //Get the selected value of the select list
+            var music_choice = e.options[e.selectedIndex].value;
+
+            // alert(music_choice); 
+            // alert(wavesurfer.load("./static/audio/" + music_choice));
+
+            $.ajax({
+            type: "POST",
+            url: '/register_music_change',
+            data: JSON.stringify({ 
+                
+                'music_choice': "./static/audio/" + music_choice,
+
+
+            } ),
+            processData: false,
+            cache: false,
+            async: false,
+            contentType: 'application/json;charset=UTF-8',
+            success: function(data) {
+                console.log("success");
+                
+            },
+            error: function (request, status, error) {
+            
+                console.log("Error");
+
+            }
+            });
             }
 
         </script>
