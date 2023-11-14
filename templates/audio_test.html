@@ -51,8 +51,10 @@
         </div>                                     -->
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
+            <p id="music">{{music}}</p>
+                         
             <!-- <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music"> -->
-            <label for="music_dropdown">Song:</label>
+            <!-- <label for="music_dropdown">Song:</label> -->
             <select id="music_dropdown" onchange="musicChange()" name="music_dropdown">
             <option value="clairdelune.wav">Clair de Lune</option>
             <option value="cardigan.mp3">Cardigan-Taylor Swift</option>
