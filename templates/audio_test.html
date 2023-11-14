@@ -820,6 +820,10 @@
             success: function(data) {
                 console.log("success");
                 
+                wavesurfer.load( "./static/audio/" + music_choice);
+                console.log(data["music"]);
+                
+                
             },
             error: function (request, status, error) {
             

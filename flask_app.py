@@ -955,7 +955,7 @@ def register_music_change():
     music = request.json["music_choice"]
     print(music)
     
-    return "completed"
+    return {"music":music}
 
 
 def run():
