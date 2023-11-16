@@ -36,6 +36,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script>
+
+        <!-- React -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
+
     </head>
 
     <div id="logo_container" style="width:100%; position:relative;">
@@ -60,7 +65,7 @@
 
 
             <div id="app"></div>
-            <button id="button-root">Live chat</button>
+            <button id="button-root">upload</button>
 
             
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
@@ -145,9 +150,7 @@
         
         </div> 
         
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
-
+        
         <script>
             document.getElementById('button-root').addEventListener('click', () => {
               ReactDOM.render(<App />, document.getElementById('app'));
