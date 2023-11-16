@@ -54,6 +54,15 @@
 
 
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
+            
+
+
+
+
+            <div id="app"></div>
+            <button id="button-root">Live chat</button>
+
+            
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
             <!-- <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music"> -->
             
@@ -135,9 +144,19 @@
             </div>
         
         </div> 
-
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
 
         <script>
+            document.getElementById('button-root').addEventListener('click', () => {
+              ReactDOM.render(<App />, document.getElementById('app'));
+            });
+            
+            const App = () => (
+              <p>Mounted!</p>
+            );
+
             function handleFiles(event) {
                 var files = event.target.files;
                 $("#src").attr("src", URL.createObjectURL(files[0]));
