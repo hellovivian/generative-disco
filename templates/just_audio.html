@@ -36,11 +36,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
         <script>hljs.highlightAll();</script>
-
-        <!-- React -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
-
     </head>
 
     <div id="logo_container" style="width:100%; position:relative;">
@@ -59,15 +54,8 @@
 
 
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
-            
-
-
-
-
-            <div id="app"></div>
-            <button id="button-root">upload</button>
-
-            
+            <input type="file" id="file" style="display:none;" />
+            <button id="button" name="button" value="Upload" onclick="thisFileUpload();">Upload</button>
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
             <!-- <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music"> -->
             
@@ -149,17 +137,12 @@
             </div>
         
         </div> 
-        
-        
-        <script>
-            document.getElementById('button-root').addEventListener('click', () => {
-              ReactDOM.render(<App />, document.getElementById('app'));
-            });
-            
-            const App = () => (
-              <p>Mounted!</p>
-            );
 
+
+        <script>
+            function thisFileUpload() {
+                document.getElementById("file").click();
+            };
             function handleFiles(event) {
                 var files = event.target.files;
                 $("#src").attr("src", URL.createObjectURL(files[0]));
