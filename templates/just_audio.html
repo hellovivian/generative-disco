@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Video Annotation System</title>
+
+        <link href="data:image/gif;" rel="icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap -->
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Roboto:wght@300c&Gloock&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="../static/css/landing_page.css">
+        <script src="../static/scripts/tracks.js"></script>
+        <script src="../static/scripts/gallery.js"></script>
+
+  
+        <!-- wavesurfer -->
+        <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/wavesurfer.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.minimap.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.regions.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.timeline.js"></script>
+
+        <!-- plugins -->
+        <!-- 
+        
+         -->
+        <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.cursor.js"></script>
+
+        <!-- Demo -->
+        <script src="./static/scripts/main_trivia.js"></script>
+        
+        <!-- highlight.js for syntax highlighting in this example -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+    </head>
+
+    <div id="logo_container" style="width:100%; position:relative;">
+        <!-- <img id='logo' src="https://bestanimations.com/media/mirror-balls/1665261514disco-ball-animated-gif-15.gif"> -->
+        <!-- <img id='logo' src="https://i.gifer.com/origin/46/460a6dc4e3949182fe60cf720c912a96_w200.gif"> -->
+        <img id='logo' src="https://i.pinimg.com/originals/05/91/c7/0591c7d9ed972c451f02e9d52199f1d6.gif">
+        
+    
+        <h3> generative disco</h3> 
+        <!-- <div class="user_study_case">
+            <input value="seleners"></input><button type="submit">go
+            </button>
+        </div>                                     -->
+
+
+
+
+        <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
+            <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
+            <!-- <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music"> -->
+            
+            <!-- <input id="music_start" name="music_start" class="text-center text-info form-control"  placeholder="Music Start"> -->
+            <!-- <input id="music_length" name="music_length" class="text-center text-info form-control"  placeholder="Music Length"> -->
+<!-- 
+            <div id="musicURLUpload" onclick="musicURLchange()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Download Music</div>
+            <div id="reloadMusic" onclick="reloadMusic()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Reload Music</div>
+             -->
+            <label for="music_dropdown">Choose Music</label>
+            <select id="music_dropdown" onchange="musicChange()" name="music_dropdown">
+            <option value="clairdelune.wav">Clair de Lune</option>
+            <option value="cardigan.mp3">Cardigan-Taylor Swift</option>
+            <option value="ny_short.m4a">Empire State of Mind</option>
+            <option value="seleners.wav">Beauty and a Beat-JB</option>
+            <option value="baby_shark.m4a">Baby Shark</option>
+
+            </select>
+
+        </div>
+
+
+    </div>
+
+    <body itemscope itemtype="http://schema.org/WebApplication">
+
+        <div id="loading"  >
+
+        </div>
+
+        <div id="page_container">
+            <div id="page_left_container" class="ui_region">
+                <h4>Audio Area </h4>
+                <div class="container">
+
+                    <div id="demo">
+
+                    </p>
+        
+                    
+        
+        
+                    </div>
+        
+                    <form role="form" name="edit" style="display:flex; flex-direction:row" 
+                    
+                     id="full-form" enctype="multipart/form-data">
+
+                        
+
+                        <div class='video_interval'>
+
+                            <div id="wave-timeline"></div>
+                        
+                            <p id="music">{{music}}</p>
+                         
+                        <div id="waveform_container">
+
+                            
+                        
+                            <div id="waveform">
+                                
+                            </div>
+                        </div>
+                                                
+
+                            
+                        </div>
+                 
+                        
+                    </form>
+                </div>
+                
+
+                
+                
+               
+            
+            </div>
+        
+        </div> 
+
+
+        <script>
+            function handleFiles(event) {
+                var files = event.target.files;
+                $("#src").attr("src", URL.createObjectURL(files[0]));
+                document.getElementById("audio").load();
+
+                var file = files[0];
+                // wavesurfer.loadBlob(file);
+                // reloadAudio();
+
+                if (file) {
+                    var reader = new FileReader();
+                    
+
+                    reader.onload = function (evt) {
+                        // Create a Blob providing as first argument a typed array with the file buffer
+                        var blob = new window.Blob([new Uint8Array(evt.target.result)]);
+
+                        // Load the blob into Wavesurfer
+                        wavesurfer.loadBlob(blob);
+                    };
+
+                    reader.onerror = function (evt) {
+                        console.error("An error ocurred reading the file: ", evt);
+                    };
+
+
+                    // Read File as an ArrayBuffer
+                    reader.readAsArrayBuffer(file);
+                }
+
+            }
+
+
+            function musicURLchange () {
+                
+
+                $.ajax({
+                type: "POST",
+                url: '/download_audio',
+                data: JSON.stringify({ 
+                    
+
+                    'audio_file': $("#urltomusic")[0].value,
+                    'music_start': $("#music_start")[0].value,
+
+                    'music_length': $("#music_length")[0].value,
+
+
+                } ),
+                processData: false,
+                cache: false,
+                async: false,
+                contentType: 'application/json;charset=UTF-8',
+                success: function(data) {
+                    console.log(data["audio_filename"]);
+                    wavesurfer.load(data["audio_filename"]);
+                    
+                },
+                error: function (request, status, error) {
+                   
+                    console.log("Error");
+            
+                }
+            });
+
+            }
+            
+
+            function reloadMusic() {
+                reloadMusic: $("#reloadMusic")[0].value,
+                console.log("./static/audio/" + reloadMusic);
+                mediaElt = "./static/audio/" + reloadMusic;
+                wavesurfer.load(mediaElt);
+                
+
+                $.ajax({
+                type: "POST",
+                url: '/change_audio',
+                data: JSON.stringify({ 
+                    
+                    'audio_file': $("#reloadMusic")[0].value,
+
+
+                } ),
+                processData: false,
+                cache: false,
+                async: false,
+                contentType: 'application/json;charset=UTF-8',
+                success: function(data) {
+                    console.log(data["audio_filename"]);
+                    wavesurfer.load(data["audio_filename"]);
+                    
+                },
+                error: function (request, status, error) {
+                   
+                    console.log("Error");
+            
+                }
+            });
+
+            }
+
+            function musicChange() {
+
+                //Get the select select list and store in a variable
+                var e = $("#music_dropdown")[0];
+
+                //Get the selected value of the select list
+                var music_choice = e.options[e.selectedIndex].value;
+
+                // alert(music_choice); 
+                // alert(wavesurfer.load("./static/audio/" + music_choice));
+
+                $.ajax({
+                type: "POST",
+                url: '/register_music_change',
+                data: JSON.stringify({ 
+                    
+                    'music_choice': "./static/audio/" + music_choice,
+
+
+                } ),
+                processData: false,
+                cache: false,
+                async: false,
+                contentType: 'application/json;charset=UTF-8',
+                success: function(data) {
+                    console.log("success");
+                    
+                },
+                error: function (request, status, error) {
+                   
+                    console.log("Error");
+            
+                }
+            });
+            }
+
+        </script>
+
+    </body>
+</html>

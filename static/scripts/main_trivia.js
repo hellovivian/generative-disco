@@ -81,6 +81,14 @@ var wavesurfer;
 // Init & load audio file
 document.addEventListener('DOMContentLoaded', function() {
     // Init
+
+    // wavesurfer = WaveSurfer.create({
+    //     container: '#waveform',
+    //     waveColor: '#4F4A85',
+    //     progressColor: '#383351',
+    //     url: $("#music")[0].innerText,
+    //   })
+
     wavesurfer = WaveSurfer.create({
         container: document.querySelector('#waveform'),
         height: 100,
@@ -95,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
         responsive:true,
         height: 200,
         barGap: 3,
-        backend: 'MediaElement',
+        url: $("#music")[0].innerText,
         plugins: [
 
             WaveSurfer.regions.create({
@@ -115,14 +123,15 @@ document.addEventListener('DOMContentLoaded', function() {
         ]
     });
 
-    // Load audio from existing media element
-    let mediaElt = $("#input_video")[0];
+    // // Load audio from existing media element
+    // let mediaElt = $("#input_video")[0];
+
 
     wavesurfer.on('error', function(e) {
         console.warn(e);
     });
 
-    wavesurfer.load(mediaElt);
+    // wavesurfer.load(mediaElt);
 
     wavesurfer.on('ready', function() {
     
