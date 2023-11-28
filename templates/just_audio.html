@@ -22,6 +22,9 @@
         <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.minimap.js"></script>
         <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.regions.js"></script>
         <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.timeline.js"></script>
+        <!-- Include WaveSurfer styles -->
+        <link rel="stylesheet" href="https://unpkg.com/wavesurfer.js/dist/wavesurfer.min.css" />
+
 
         <!-- plugins -->
         <!-- 
@@ -89,6 +92,7 @@
         <div id="page_container">
             <div id="page_left_container" class="ui_region">
                 <h4>Audio Area </h4>
+                <div id="react-root"></div>
                 <div class="container">
 
                     <div id="demo">
@@ -136,8 +140,16 @@
             
             </div>
         
-        </div> 
+        </div>
 
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/wavesurfer.js"></script>
+    <script type="text/javascript" src="AudioUpload.compiled.js"></script>
+    <!-- Add a script to mount the React component in the specified div -->
+    <script type="text/javascript">
+      ReactDOM.render(React.createElement(AudioUpload), document.getElementById('react-root'));
+    </script>
 
         <script>
             function thisFileUpload() {
