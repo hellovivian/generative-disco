@@ -1,0 +1,67 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.title {
+  font-family: "Gloock", serif !important;
+  color: deeppink;
+}
+
+.container {
+  background-color: white;
+  border: 1px solid deeppink !important;
+}
+
+.logo {
+  width: 48px;
+}
+
+.input {
+  display: flex;
+  background-color: white;
+  color: deeppink;
+}
+.placeholder {
+  text-align: center !important;
+}
+.input.Mui-focused {
+  border-color: deeppink !important;
+  box-shadow: 0 0 0 0.2rem rgba(255, 20, 147, 0.25);
+  outline: none;
+}
+
+.pink_button {
+  display: flex;
+  width: "40px";
+  height: "32px";
+  background-color: deeppink !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.grey_button {
+  display: flex;
+  background-color: lightgrey !important;
+  color: black !important;
+  font-weight: bold !important;
+  align-items: center;
+}
+
+.blue_button {
+  display: flex;
+  width: "40px";
+  height: "32px";
+  background-color: blue !important;
+  color: white !important;
+  font-weight: bold !important;
+}
