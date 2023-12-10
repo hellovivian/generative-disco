@@ -2,7 +2,7 @@ import { Box, Typography, Stack, Button } from "@mui/material";
 import "../index.css";
 import Track from "../components/track";
 import ImagePill from "../components/image-pill";
-import Stitch from "../assets/stitch.gif"
+import Stitch from "../assets/stitch.gif";
 
 function Tracks() {
   return (
@@ -26,7 +26,7 @@ function Tracks() {
           height="60px"
           alt="stitch"
           src={Stitch}
-          style={{ marginRight:"15px" }}
+          style={{ marginRight: "15px" }}
         />
         STICH VIDEO
       </Button>

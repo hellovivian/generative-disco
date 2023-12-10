@@ -21,9 +21,9 @@ function Track() {
           alt="image"
           src="https://cdn-icons-png.flaticon.com/512/61/61122.png"
         />
-      </Grid>
-  );
-    }
+      </Grid>,
+    );
+  }
 
   return (
     <Paper
@@ -57,9 +57,7 @@ function Track() {
         <Stack direction="column">
           <Typography className="title">FRAMES</Typography>
           <Grid container directon="row" spacing={1} width="100%">
-            {
-              items
-            }
+            {items}
           </Grid>
         </Stack>
       </Stack>

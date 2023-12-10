@@ -21,7 +21,11 @@ function ImagePill({ text }) {
         alt="image"
         src="https://cdn-icons-png.flaticon.com/512/61/61122.png"
       />
-      <Stack direction="row" spacing={1} sx={{alignItems:"center", justifyContent:"center"}}>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{ alignItems: "center", justifyContent: "center" }}
+      >
         <Button className="grey_button" id="shuffle">
           <img
             width="20px"
