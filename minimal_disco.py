@@ -36,24 +36,18 @@ def upload_music():
     # Check if the POST request has the file part
     if 'newMusic' not in request.files:
         return redirect(request.url)
-
     file = request.files['newMusic']
-
     # Check if the file is selected and has an allowed extension
     if file.filename == '' or not allowed_file(file.filename):
-        return "Invalid file"
-
-    # Get the user-defined file name
-    new_file_name = request.form['newFileName']
-    if not new_file_name:
-        return "Please provide a file name"
-
+        return "Invalid file"    
+    
     # Securely save the file in the ./static/audio/ directory
-    filename = secure_filename(new_file_name + os.path.splitext(file.filename)[1])
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    music_path = f"{os.getcwd()}/static/audio/{file.filename}"
+    print(music_path)
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], music_path))
 
     # Update the global music variable
-    music = f"./static/audio/{filename}"
+    
     return redirect(url_for('just_audio'))
 
 def run():

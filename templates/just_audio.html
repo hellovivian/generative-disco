@@ -58,7 +58,13 @@
 
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
             <input type="file" id="file" style="display:none;" />
-            <button id="button" name="button" value="Upload" onclick="thisFileUpload();">Upload</button>
+            <form>
+                <div>
+                    <label>Upload file</label>
+                    <input type ="file">
+                </div>
+                <button type="submit">upload music</button>
+            </form>
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
             <!-- <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music"> -->
             
@@ -152,8 +158,25 @@
     </script>
 
         <script>
-            function thisFileUpload() {
+            function thisFileUpload(event) {
                 document.getElementById("file").click();
+                
+                var form = new FormData();
+                form.append("newMusic", fileInput.files[0]);
+
+                var settings = {
+                "url": "/upload_music",
+                "method": "POST",
+                "timeout": 0,
+                "processData": false,
+                "mimeType": "multipart/form-data",
+                "contentType": false,
+                "data": form
+                };
+
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+                });
             };
             function handleFiles(event) {
                 var files = event.target.files;
