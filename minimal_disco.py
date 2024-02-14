@@ -23,5 +23,5 @@ def register_music_change():
     
 def run():
 
-    app.run(host='0.0.0.0', threaded=True, debug=True, port = 7860)
+    app.run(host='0.0.0.0', threaded=True, debug=True, port = 7861)
 run()

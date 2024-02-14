@@ -7,29 +7,23 @@ import gradio as gr
 from pathlib import Path
 from flask import Flask, send_file, request, jsonify, g, render_template, url_for, redirect
 from stable_diffusion_videos import generate_images
-
 import base64
 from moviepy.editor import *
-
 import PIL
 from PIL import Image
 from io import BytesIO
 import pdb 
 import shutil
-
 import re
 import json
 import numpy as np
-# from diffusers import StableDiffusionImg2ImgPipeline
 import time
 from typing import List, Optional, Tuple, Union
 import random
-
 import subprocess
 
 num_generations = 0
 app = Flask(__name__)
-
 num_intervals = 0
 
 
@@ -109,8 +103,6 @@ def prepare_latents(pipeline, image, timestep, batch_size, num_images_per_prompt
         init_latents = torch.cat(init_latents, dim=0)
     else:
         init_latents = pipeline.vae.encode(image).latent_dist.sample(generator)
-
-    # init_latents = pipeline.vae.config.scaling_factor * init_latents
 
     if batch_size > init_latents.shape[0] and batch_size % init_latents.shape[0] == 0:
         # expand init_latents for batch_size
@@ -242,14 +234,7 @@ def generate_brainstorm_img():
 @app.route('/receive_img_blob', methods=["POST"])
 def receive_img_blob():
     global num_generations
-
-    # file =request.files['image']
-    # if file:
-    #     file.save("./savedimage.jpg")
-    #     print("image saved")
-    #this will route to a new 
     interval = "1"
-    # interval = request.form["interval_num"]
     prompt = request.form["start_prompt"]
 
     if request.form["test_seed"]:
@@ -259,9 +244,6 @@ def receive_img_blob():
 
     prompt2 = request.form["end_prompt"]
 
-    # try:
-    #     imgChecked = request.form["imgChecked"]
-    # except:
     imgChecked = False
 
     num_generations += 1
@@ -281,75 +263,14 @@ def receive_img_blob():
         
         img2.images[0].save(f"./static/generations/{num_generations}_{generation2_name}.jpg" , 'JPEG', quality=70)
 
-    # if imgChecked:
-    #     img_output = img2img(prompt,seed)
-
-        
-    #     img_output.save(f"./static/generations/{num_generations}_{generation_name}.jpg" , 'JPEG', quality=70)
-    #     img_output.save(f"./static/previews/{interval}_start.jpg" , 'JPEG', quality=70)
-    # else:
-        # pattern = r'(.*)(static)(.*)'
-        # output_file_path = re.match(pattern, output_file_path).groups()[-1]
-    
-    
-
-    # img.images[0].save(f"./static/previews/{interval}_start.jpg" , 'JPEG', quality=70)
-
-    # image_data = base64.b64decode(img_data)
-    # with open("./image_prompt.png","wb") as fh:
-    #         fh.write(image_data)
-    # response = jsonify({})
-    # response.headers.add("Access-Control-Allow-Origin", "*")
-
     return redirect(url_for('audio_test'))
-
-# # @app.route('/img2img', methods=["POST"])
-# def img2img(prompt,seed):
-#     img_url = "./savedimage.jpg"
-#     init_image = Image.open(img_url).convert("RGB")
-#     image = preprocess(init_image)
-    
-#     num_inference_steps = 300
-#     strength = 0.8
-#     num_images_per_prompt = 1
-
-#     pipe = StableDiffusionImg2ImgPipeline.from_pretrained(model_id_or_path, torch_dtype=torch.float16)
-#     pipe = pipe.to(device)
-#     init_image = Image.open(img_url).convert("RGB")
-#     init_image = init_image.resize((512, 512))
-#     image = preprocess(init_image)
-
-#     prompt_embeds = pipe._encode_prompt(
-#             prompt,
-#             device,
-#             num_images_per_prompt,
-#             False,
-#             ""
-#         )
-
-#     generator = torch.Generator(device=device).manual_seed(int(seed) ) 
-
-#     device2 = torch.device(f"cuda:0")
-#         # 5. set timesteps
-#     pipe.scheduler.set_timesteps(num_inference_steps, device=device)
-#     timesteps, num_inference_steps = pipe.get_timesteps(num_inference_steps, strength, device2)
-#     latent_timestep = timesteps[:1].repeat(1 * num_images_per_prompt)
-#     # 6. Prepare latent variables
-#     latents = pipe.prepare_latents(
-#         image, latent_timestep, 1, num_images_per_prompt, prompt_embeds.dtype, device2
-#     )
-
-#     images = pipe(prompt=prompt, image=init_image, strength=0.8, guidance_scale=7.5, generator = generator, num_inference_steps = num_inference_steps).images
-#     return images[0]
-    
-
 
 @app.route('/call_generate_end', methods=["POST"])
 def call_generate_end():
     json_data = request.json["json_data"]
     print(json_data)
     
-    #call json.loads twice because first call returns string
+
     intervals = json.loads(json.loads(json_data))
     print("entered")
     
@@ -360,12 +281,9 @@ def call_generate_end():
     interval = request.json["interval_num"]
     prompt = request.json["prompt"]
     seed = request.json["seed"]
-    print(seed)
-    # seed = request.json["seed"]
-    # output_file_path = request.json["outputFilePath"]
+
     print(f"GENERATING {prompt} with seed {seed}")
-    # pattern = r'(.*)(static)(.*)'
-    # output_file_path = re.match(pattern, output_file_path).groups()[-1]
+
     img=generate_images(prompt,seed)
     generation_name = f"{prompt}_{seed}"
     # timestamp = 
@@ -627,7 +545,6 @@ def brainstorm_gpt():
     goal = request.json["goal"]
 
     prompt = f"In 5 words or less, describe an image that symbolizes these lyrics '{goal}':"
-    print(prompt)
 
     regex_pattern = r'(.*)\*\*(.*)\*\*(.*)'
 
@@ -670,11 +587,6 @@ def brainstorm_gpt():
     response3 = response3["choices"][0].text.strip()
 
 
-    #response1 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-    #response2 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-    #response3 = openai.ChatCompletion.create(model="gpt-4", max_tokens=100, messages=[{"role": "user", "content": prompt}])["choices"][0]["message"]["content"]
-
-
     
 
     return {
@@ -699,97 +611,6 @@ def stitch_videos():
     print(video_clips)
     final = concatenate_videoclips(video_clips)
     final.write_videofile("./static/output/stitched_output.mp4", audio_codec='aac', rewrite_audio=False, audio=False)
-    return "completed"
-
-
-
-@app.route("/generate_video", methods=["POST"])
-def generate_video():
-    
-    shutil.rmtree('./static/output/',ignore_errors=True)
-
-    # start_prompt = request.json["start_prompt"]
-    # end_prompt = request.json["end_prompt"]
-    # seed = int(request.json["seed"])
-    json_data = request.json["json_data"]
-    
-    #call json.loads twice because first call returns string
-    intervals = json.loads(json.loads(json_data))
-    print("entered")
-    
-    with open('./static/example.json', 'w') as f:
-        json.dump(intervals, f)
-        print("dumped")
-        f.close()
-
-    # interpolation_requests = []
-    
-    # fps = 20
-    # interval_counter= 0
-    # for curr_interval, next_interval in zip(intervals, intervals[1:]):
-    #     interpolation_request = {}
-
-
-    #     current_prompt = curr_interval["data"]["note"]
-    #     end_prompt = next_interval["data"]["note"]
-
-    #     interpolation_request_name = f"interval_{interval_counter}"
-    #     interpolation_request["name"] = interpolation_request_name
-    #     interval_counter += 1
-
-    #     curr_audio_interval = [curr_interval["start"], next_interval["start"]]
-
-    #     num_interpolation_steps = [(b-a) * fps for a, b in zip(curr_audio_interval, curr_audio_interval[1:])]
-    #     interpolation_request["paired_prompts"] = [current_prompt, end_prompt]
-    #     interpolation_request["audio_interval"] = curr_audio_interval
-    #     interpolation_request["num_interpolation_steps"] = [int(abs(min((b-a) * fps, 30))) for a, b in zip(curr_audio_interval, curr_audio_interval[1:])]
-
-    #     interpolation_requests.append(interpolation_request)
-    
-
-    # interpolation_request = {}
-    # last_interval = next_interval
-    
-    # current_prompt = last_interval["data"]["note"]
-    # end_prompt = "matte black texture"
-
-    # interpolation_request_name = f"interval_{interval_counter}"
-    # interpolation_request["name"] = interpolation_request_name
-
-    # curr_audio_interval = [last_interval["start"], last_interval["end"]]
-    # num_interpolation_steps = [(b-a) * fps for a, b in zip(curr_audio_interval, curr_audio_interval[1:])]
-    # interpolation_request["paired_prompts"] = [current_prompt, end_prompt]
-    # interpolation_request["audio_interval"] = curr_audio_interval
-    # interpolation_request["num_interpolation_steps"] = [abs((b-a) * fps) for a, b in zip(curr_audio_interval, curr_audio_interval[1:])]
-
-    # # if interpolation_request["num_interpolation_steps"][0] > 29:
-    # #     a = curr_audio_interval[0]
-    # #     b =curr_audio_interval[1]
-    # #     fps = int(interpolation_request["num_interpolation_steps"][0] / (b-a))
-
-    # interpolation_requests.append(interpolation_request)
-    
-    # print(interpolation_requests)
-
-    # for interpolation_request in interpolation_requests:
-    #     print(interpolation_request['name'])
-
-    #     video_path = pipeline.walk(
-    #     prompts=interpolation_request["paired_prompts"],
-    #     seeds=[32,32],
-    #     num_interpolation_steps=interpolation_request["num_interpolation_steps"],
-    #     height=512,                            # use multiples of 64
-    #     width=256,   
-    #                             # use multiples of 64
-    #     audio_filepath='./static/audio/clairdelune.wav',    # Use your own file
-    #     audio_start_sec=interpolation_request["audio_interval"][0],       # Start second of the provided audio
-    #     fps=fps,                               # important to set yourself based on the num_interpolation_steps you defined
-    #     batch_size=1,                          # increase until you go out of memory.
-    #     output_dir='./static/',                 # Where images will be saved
-    #     name=interpolation_request['name'],                             # Subdir of output dir. will be timestamp by default
-    #     )
-    #     shutil.move(f"./static/{interpolation_request['name']}", f"./static/output/")
-
     return "completed"
 
 
@@ -823,58 +644,25 @@ def generate_images(prompt,seed):
     return img
 
 
-"""
-Landing page
-"""
-@app.route("/hello_world")
-def hello_world():
-    # frames = sorted(os.listdir("./static/output/output_000000"))
-    # frames = ["/output/output_000000/" + frame_filename for frame_filename in frames]
-    # print(frames)
-    generations = sorted(os.listdir("./static/generations/"))
-    generations = ["/generations/" + generation_filename for generation_filename in generations]
-    return render_template("videoapp.html", img='generations/generated_img', generations=generations, video = 'dreams/20230202-183918/20230202-183918.mp4')
-
-# @app.route("/start")
-# def start_video_creation():
-#     torch.cuda.empty_cache()
-
-#     return render_template("start.html")
-
-
-
-
 @app.route("/audio_with_history")
 def audio_with_history():
     previous_intervals_path = "./static/example.json"
-
-    # with open(json_file_path, 'r') as j:
-    #     previous_intervals = json.loads(j.read())
 
     torch.cuda.empty_cache()
 
     interval_folder_names = next(os.walk("./static/output/"))[1]
     
     output_files = next(os.walk("./static/output/"))[2]
-    print(interval_folder_names)
+
     frames = {}
     for folder_name in interval_folder_names:
         frames[folder_name] = {}
         frames[folder_name]["interval_frames"] = sorted(os.listdir("./static/output/" + f"{folder_name}/"))
         frames[folder_name]["interval_frames"] = [f"output/{folder_name}/{frame}" for frame in frames[folder_name]["interval_frames"] ]
         frames[folder_name]["interval_video"] = "./static/output/" + f"{folder_name}/{folder_name}" +".mp4"
-    print(frames)
     
     video = "./static/output.mp4"
-    # video = [f"./static/output/" + output_file for output_file in output_files if output_file[-4:] == ".mp4"][0]
- 
-    # interval_folder_frames = [os.listdir("./static/output/"+folder_name) for folder_name in interval_folder_names  ]
-    # print(interval_folder_frames)
-    # frames = ["/output/interval0/" + frame_filename for frame_filename in interval_folder_frames]
-    # print(frames)
-    # generations = sorted(os.listdir("./static/generations/"))
-    # generations = ["/generations/" + generation_filename for generation_filename in generations]
-    
+
     return render_template("audio_test.html", frames=frames, output_video = video, previous_intervals_path = previous_intervals_path)
 
 from glob import glob
@@ -884,8 +672,7 @@ def folder_files_by_ext(folder_path, extension):
 
 
 def find_approx_create_time(interval_folder_name):
-    # print(interval_folder_name)
-    # print(next(os.walk(interval_folder_name))[0])
+
     internal_folder = next(os.walk("./static/output/" + interval_folder_name))[0]
     print(internal_folder)
     files = next(os.walk(internal_folder))[0]
@@ -897,7 +684,7 @@ def find_approx_create_time(interval_folder_name):
 
 from collections import OrderedDict
 @app.route("/", methods=["GET","POST"])
-def audio_test():
+def user_interface():
     global music
     global video
 
@@ -907,13 +694,8 @@ def audio_test():
 
     if os.path.isdir('./static/output'):
         interval_folder_names = sorted(next(os.walk("./static/output/"))[1])
-        # key=lambda folder_name: find_approx_create_time(folder_name), reverse=False)
-        # interval_folder_names.sort(key=lambda folder_name: find_approx_create_time(folder_name), reverse=True)
-
-        
         
         output_files = next(os.walk("./static/output/"))[2]
-      
         
         for folder_name in interval_folder_names:
             frames[folder_name] = OrderedDict()
@@ -926,14 +708,6 @@ def audio_test():
         videos = folder_files_by_ext("./static/output/","*.mp4")
         if "./static/output/stitched_output.mp4" in videos:
             video = "./static/output/stitched_output.mp4"
-        
-        # videos = [f"./static/output/" + output_file for output_file in output_files if output_file[-4:] == ".mp4"]
-        print(videos)
-        # videos = videos.sort(key=lambda x: os.path.getmtime("./static/generations/" + x), reverse=True)
-    
-        # interval_folder_frames = [os.listdir("./static/output/"+folder_name) for folder_name in interval_folder_names  ]
-        # print(interval_folder_frames)
-        # frames = ["/output/interval0/" + frame_filename for frame_filename in interval_folder_frames]
 
     generations = sorted(os.listdir("./static/generations/"))
 
@@ -946,7 +720,7 @@ def audio_test():
 
 
     generations = [("generations/" + generation_filename, generation_filename.replace(" ", "_").replace(",","-")) for generation_filename in generations]
-    return render_template("audio_test.html", frames=frames, videos = videos, output_video = video, generations = generations)
+    return render_template("user_interface.html", frames=frames, videos = videos, output_video = video, generations = generations)
 
 @app.route("/register_music_change", methods=["POST"])
 def register_music_change():
