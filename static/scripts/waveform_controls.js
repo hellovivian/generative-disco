@@ -1,3 +1,8 @@
+/**
+ * Controls waveform. Largely wavesurfer.js code.
+ *
+ */
+
 let ws = window.wavesurfer;
 
 let interval_counter = 0;
@@ -89,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
     //     url: $("#music")[0].innerText,
     //   })
 
+    // Create wavesurfer element. Url field is important as that controls what music is being loaded. 
     wavesurfer = WaveSurfer.create({
         container: document.querySelector('#waveform'),
         height: 100,
@@ -132,16 +138,18 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // wavesurfer.load(mediaElt);
+    // Default: load clairdelune.wav
     wavesurfer.load("./static/audio/clairdelune.wav");
 
     wavesurfer.on('ready', function() {
     
-        // apply the next color to the title element
+        // Apply the gray color to any interval that is drawn
         
         wavesurfer.enableDragSelection({
             color: 'rgba(128,128,128,0.2)'
         });
 
+        // Loads intervals from interval_data, which is being written to by the backend
         wavesurfer.util
             .fetchFile({
                 responseType: 'json',
@@ -153,18 +161,17 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     });
 
+    // Triggers the play and pause of a specific interval. Stops on exit of the region.
     wavesurfer.on('region-play', function(region) {
         console.log("playing");
         wavesurfer.play(region.start);
         region.once('out', function() {
-
-            
             wavesurfer.pause();
         });
     });
 
     
-    
+    // On region click, play the region. Highlight it green to make it visually active. Unset the rest of the intervals to be gray.
     wavesurfer.on('region-click', function(region, e) {
         
         
@@ -209,6 +216,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+/**
+ * Function that unsets the inactive intervals to be gray.
+ *
+ */
 function unsetColors() {
   Object.keys(wavesurfer.regions.list).forEach(function(id) {
     var region = wavesurfer.regions.list[id];
@@ -222,6 +233,7 @@ function unsetColors() {
     region.updateRender();
   });
 }
+
 /**
  * Save annotations to localStorage.
  */
@@ -270,6 +282,7 @@ function saveRegions() {
 
     json_data = JSON.stringify(localStorage.regions)
 
+    // Ajax call which writes the interval data (local Storage) into JSON in the backend.
     $.ajax({
         type: "POST",
         url: '/save_regions',
@@ -311,6 +324,10 @@ function saveRegions() {
 
 }
 
+/**
+ * Binds the save to keypresses. Not exposed to the user, so consider deleting.
+ *
+ */
 $(document).ready(function() {
     $(window).keydown(function(event){
       if(event.keyCode == 13) {
@@ -370,7 +387,10 @@ function randomColor(alpha) {
 
 }
 
-
+/**
+ * Renumbers intervals on the waveform. (Edits the form data)
+ *
+ */
 function renumberIntervals() {
     let form = document.forms.edit;
     let i =1;
@@ -463,6 +483,9 @@ function editAnnotation(region) {
 //     }
 // };
 
+/**
+ * Deletes a region in the intervals 
+ */
 function deleteRegion() {
 
     let form = document.forms.edit;
@@ -478,6 +501,7 @@ function deleteRegion() {
 
     let i =1;
 
+    // wavesurfer.regions.list references the intervals
     for (let region in wavesurfer.regions.list) {
         console.log(wavesurfer.regions.list[region]["data"]["interval_num"]);
         wavesurfer.regions.list[region]["data"]["interval_num"] = i;
@@ -495,7 +519,10 @@ function deleteRegion() {
 //     );
 // };
 
-
+/**
+ * Shows data bound to an interval. Unused and consider deleting, but kept for reference. From wavesurfer.js example.
+ *
+ */
 function showNote(region) {
     // console.log("showing");
     // if (!showNote.el) {
@@ -506,6 +533,11 @@ function showNote(region) {
     // showNote.el.textContent =  " 🎵" + region.data.start_note + "🎵" || '–';
 }
 
+/**
+ * Hides data bound to an interval. From wavesurfer.js example.
+ *
+ */
+
 function hideNote(region) {
     if (!hideNote.el) {
         hideNote.el = document.querySelector('#subtitle');
@@ -515,6 +547,10 @@ function hideNote(region) {
     hideNote.el.textContent = '–';
 }
 
+/**
+ * Sorts dictionary by their start time
+ *
+ */
 // from https://stackoverflow.com/questions/25500316/sort-a-dictionary-by-value-in-javascript
 function sort_object(obj) {
     items = Object.keys(obj).map(function(key) {
@@ -534,10 +570,15 @@ function sort_object(obj) {
 
 
 function getStartTime(region) {
-    // console.log(region)
     return region["start"]
 
 }
+
+/**
+ * Align interval functions. Solves by a greedy strategy where we sort by start_times.
+ * If the intervals are within a buffer (hardcoded to be 0.25) rewrite their start and end times so that they are cleanly concatenated.
+ *
+ */
 function alignIntervals() {
   
     console.log("aligning intervals");
@@ -616,13 +657,12 @@ function alignIntervals() {
 
 }
 
+/**
+ * Adds a new interval which is by default set to be 1 second. The start time is wherever the playhead is.
+ *
+ */
 function addInterval() {
     wavesurfer.addRegion({start:wavesurfer.getCurrentTime(), end:wavesurfer.getCurrentTime()+1.0});
 
 }
 
-
-function transferLyric(elem) {
-    $("#goal_info")[0].value =elem.innerText;
-    brainstormGPT();
-}
