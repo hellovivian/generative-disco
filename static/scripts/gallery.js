@@ -1,3 +1,13 @@
+/**
+ * Filename: gallery.js
+ * Author: Vivian Liu
+ * Functions here manage the visual state of the application. (Many functions trigger UI-specific requests (managing visibility, generation of variations, etc.)
+ */
+
+
+/**
+ * Toggle to hide a deleted track.
+ */
 function hideTrack(element) {
     srcToDelete = element.parentNode.children[1].src;
     console.log(element.parentNode.children[1].src);
@@ -28,6 +38,10 @@ function hideTrack(element) {
     });
 
 }   
+/**
+ * Vary a chosen image.
+ * AJAX request POSTS to backend, which triggers the GPT chain to prompt rewrite and create variations.
+ */
 function varyImage(element) {
 
   $("#start_prompt")[0].value = element.parentNode.children[1].id.slice(0,-4).replaceAll("_"," ").replaceAll("-",",");
@@ -71,7 +85,9 @@ function varyImage(element) {
     
 
 
-
+/**
+ * Toggle to hide a card with a deleted image.
+ */
 function hideContainer(element) {
     // console.log(element.parentNode.children[1].src);
     imgSrcDeleted = element.parentNode.children[1].src;
@@ -107,7 +123,9 @@ function hideContainer(element) {
 }
 
 
-
+/**
+ * Sends an initial image (archived)
+ */
 function sendInitialImg(elem) {
 
     var file_data = elem.files[0];
@@ -156,7 +174,9 @@ function sendInitialImg(elem) {
 
 }
 
-
+/**
+ * AJAX request that triggers Img2Img pipeline (archived)
+ */
 function sendImg2Img() {
 
     $.ajax({
@@ -192,6 +212,9 @@ function setDefaultImg(elem) {
 
 }
 
+/**
+ * Regenerates a frame (deprecated, consider deleting)
+ */
 function regenerateFrame(element) {
     promptToRegenerate = element.parentNode.parentNode.children[1].children[0].innerText;
     console.log(element.parentNode.parentNode.children[1].children[0]);
@@ -200,7 +223,9 @@ function regenerateFrame(element) {
     
 }
 
-
+/**
+ * Stitches video together by grabbing all the intervals and finding their output interval by tagged class
+ */
 function stitchVideo() {
 
     $('#loading').show();
@@ -247,6 +272,9 @@ function stitchVideo() {
       
 }
 
+/**
+ * Brainstorm function which populates with a set of style keywords randomly sampled from the backend of curated styles.
+ */
 function brainstorm() {
     $.ajax({
         type: "POST",
@@ -301,6 +329,9 @@ function brainstorm() {
 
 }
 
+/**
+ * Automatically generates 5 images given a starting phrase from the user (which can be a song name, a lyric etc. )
+ */
 function brainstormGPT() {
     
 
@@ -353,11 +384,17 @@ function brainstormGPT() {
   
 }
 
-
-
+/**
+ * Triggers play or pause action on the wavesurfer.
+ */
 function playWaveSurfer() {
     window.wavesurfer.playPause();
 }
+
+/**
+ * Toggle to open or close history.
+ * Currently unused.
+ */
 function openHistory(element) {
     element.classList.toggle("active");
     var content = $("#preview_history_area")[0];
@@ -368,6 +405,9 @@ function openHistory(element) {
     }
 }
 
+/**
+ * Toggle for whether a generated image is active or not.
+ */
 function generatedImageClick(elem ) {
     console.log(elem);
 
@@ -375,7 +415,10 @@ function generatedImageClick(elem ) {
 
 }
 
+/**
+ * Toggle between which prompt (start or end) is active or not.
 
+ */
 function changePromptFocus(elem) {
     if (elem.id == $(".active_prompt")[0].id) {
         return
@@ -391,11 +434,17 @@ function changePromptFocus(elem) {
     
 }
 
+/**
+ * Toggle to make a chosen subject active.
+ */
 function subjectPillClick(elem) {
     console.log(elem);
     $(".active_prompt")[0].value += elem.innerText + ",";
 }
 
+/**
+ * Toggle to a chosen pill (style) active.
+ */
 function pillClick(elem) {
     console.log(elem);
     $(".active_prompt")[0].value += "," + elem.innerText ;
