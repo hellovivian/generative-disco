@@ -35,21 +35,38 @@ function varyImage(element) {
   let re2 = new RegExp("\\d+(.*)\\s\\d+");
     
   $("#start_prompt")[0].value = prompt_and_seed.match(re2)[1];
+    $('#loading').show();
 
-  let re = new RegExp("(\\d+)",'g');
+     $.ajax({
+        type: "POST",
+        url: '/get_variation',
+        data: JSON.stringify({ 
 
-      const found = prompt_and_seed.matchAll(re);
-    
-      var seed ;
-      for (const match of found) {
+            'prompt': $("#start_prompt")[0].value,
+            'openai_api_key': $("#openaikey")[0].value,
+            
 
-        seed = match[0];
-      }
-      console.log(seed  );
+        } ),
+        processData: false,
+        cache: false,
+        async: false,
+        contentType: 'application/json;charset=UTF-8',
+        success: function(data) {
+            $('#loading').hide();
 
-      $("#test_seed")[0].value = seed;
+            $("#generations_container").load( " #generations_container");
+  
+                    
 
-      generateBrainstormImg();
+        },
+        error: function (request, status, error) {
+            clearInterval(handle);
+            console.log("Error");
+
+        }
+    });
+
+ 
 }
     
 
@@ -77,7 +94,7 @@ function hideContainer(element) {
         async: false,
         contentType: 'application/json;charset=UTF-8',
         success: function(data) {
-        //    alert("returned")
+
             
             
         },
@@ -287,7 +304,6 @@ function brainstorm() {
 function brainstormGPT() {
     
 
-    if ($("#openaikey")[0].value != "") {
         $("#loading").show();
         $.ajax({
             type: "POST",
@@ -305,44 +321,35 @@ function brainstormGPT() {
             contentType: 'application/json;charset=UTF-8',
             success: function(data) {
                 $("#loading").hide();
-               
-                // $(".content")[0].innerHTML = ""
                 
-                $("#startSubject1")[0].innerHTML = data["subject1"];
-                $("#startSubject2")[0].innerHTML = data["subject2"];
-                $("#startSubject3")[0].innerHTML = data["subject3"];
-    
-    
+                subjects = data["subjects"];
+                
+                $("#startSubject1")[0].innerHTML = subjects[0];
+                $("#startSubject2")[0].innerHTML = subjects[1];
+                $("#startSubject3")[0].innerHTML = subjects[2];
+                $("#startSubject4")[0].innerHTML = subjects[3];
+                $("#startSubject5")[0].innerHTML = subjects[4];
+          
                 $(".subject_empty").removeClass("subject_empty");
-                brainstorm();
-               
-                // $("#color_end1")[0].value = data[0][1];
-                // $("#angle_end1")[0].value = data[1][1];
-                // $("#time_end1")[0].value = data[2][1];
+
+
+                  $("#generations_container").load( " #generations_container");
     
-    
-                // "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'> Color transition:"  + data[0] + "<br>"
-                // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Motion transition:"  + data[1] + "<br>"
-                // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Perspective transition:"  + data[2] + "<br>"
-                
-                // $(".content")[0].innerHTML += "<img width='24px' src='https://cdn-icons-png.flaticon.com/512/858/858150.png'>Lyric suggestion:"  + data[3] + ""
-                // // $(".content")[0].innerHTML += "</ul>"
-                
+                       
                 
                 
             },
             error: function (request, status, error) {
                 $("#loading").hide();
-                brainstormGPT();
+//                 brainstormGPT();
+                alert("Error, please regenerate.")
                 clearInterval(handle);
                 console.log("Error");
                 
         
             }
         });
-    } else {
-        alert("Please enter an OpenAI API key in the field on the top right.");
-    }
+
   
 }
 

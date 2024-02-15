@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Video Annotation System</title>
+        <title>Generative Disco</title>
 
         <link href="data:image/gif;" rel="icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,7 +30,7 @@
         <script src="https://unpkg.com/wavesurfer.js@6.6.4/dist/plugin/wavesurfer.cursor.js"></script>
 
         <!-- Demo -->
-        <script src="./static/scripts/main_trivia.js"></script>
+        <script src="./static/scripts/waveform_controls.js"></script>
         
         <!-- highlight.js for syntax highlighting in this example -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
@@ -39,126 +39,50 @@
     </head>
 
     <div id="logo_container" style="width:100%; position:relative;">
-        <!-- <img id='logo' src="https://bestanimations.com/media/mirror-balls/1665261514disco-ball-animated-gif-15.gif"> -->
-        <!-- <img id='logo' src="https://i.gifer.com/origin/46/460a6dc4e3949182fe60cf720c912a96_w200.gif"> -->
+
         <img id='logo' src="https://i.pinimg.com/originals/05/91/c7/0591c7d9ed972c451f02e9d52199f1d6.gif">
         
     
         <h3> generative disco</h3> 
-        <!-- <div class="user_study_case">
-            <input value="seleners"></input><button type="submit">go
-            </button>
-        </div>                                     -->
+ 
         <div style='float:right; margin-left: auto; order: 2; padding: 0.5em; display:flex;'>
             <input id="openaikey" name="openaikey" class="text-center text-info form-control"  placeholder="OpenAI Key"> 
-            <p id="music">{{music}}</p>
-                         
             <!-- <input id="urltomusic" name="urltomusic" class="text-center text-info form-control"  placeholder="URL to Music"> -->
-            <!-- <label for="music_dropdown">Song:</label> -->
+            <label for="music_dropdown"></label>
             <select id="music_dropdown" onchange="musicChange()" name="music_dropdown">
-            <option value="clairdelune.wav">Clair de Lune</option>
-            <option value="cardigan.mp3">Cardigan-Taylor Swift</option>
+            <option value="anothabanga.m4a">Calm Down (Selena Gomez)</option>
+            <option value="lana.mp4">Lana Del Rey</option>
             <option value="ny_short.m4a">Empire State of Mind</option>
-            <option value="seleners.wav">Beauty and a Beat-JB</option>
-            <option value="bridgerton.m4a">Bridgerton OST</option>
-            <option value="lalaland.m4a">Lala Land OST</option>
-            <option value="diamonds.m4a">Diamonds</option>
-            <option value="industrybaby.m4a">Industry Baby</option>
-
-            <option value="Cruelsummer-TaylorSwift.m4a">Cruel Summer</option>
-            <option value="Down-JasonWalker.m4a">Down - Jason Walker</option>
-            <option value="Eyesonme-Faye.m4a">Eyes on Me - Faye</option>
-            <option value="Photograph-EdSheeran.m4a">Photograph - Ed Sheeran</option>
-            <option value="Moonlight-Henry.mp3">Moonlight Henry</option>
-
-            <option value="ontheground.mp3">On the Ground - Rose</option>
-            <option value="badidea.mp3">Bad Idea Right - Olivia Rodrigo</option>
-            <option value="takeitfromme.mp3">Take it from Me - The Weepies</option>
-            <option value="lexie_magician.mp3">Magician -Lexie Liu</option>
-            <option value="lizzopink.mp3">Pink- Lizzo</option>
-            <option value="mariah.mp3">All I Want for Xmas - Mariah Carey</option>
-            <option value="gaga_babylon.mp3">Babylon - Gaga</option>
-            <option value="starsalign.mp3">Stars Align - R3HAB Jolin Tsai</option>
-            <option value="liar_icespice.mp3">Liar - PinkPantheress Ice Spice</option>
-            <option value="fiftyfifty_cupid.mp3">Fifty Fifty - Cupid</option>
-
-            <option value="round-here_tobe-nwigwe.mp3">Round Here - Tobe Nwigwe</option>
-            <option value="sprinter_central-cee.mp3">Sprinter Central Cee</option>
-            <option value="no-new-friends_labrinth.mp3">No New Friends - Labrinth</option>
-            <option value="hits-different_taylor-swift.mp3">Hits Different - Taylor Swift</option>
-            <option value="darling_halsey.mp3">Darling - Halsey</option>
-            <option value="cant-catch-me-now_olivia-rodrigo.mp3">Can't Catch Me Now - Olivia Rodrigo</option>
-            <option value="breathe_dom-fera.mp3">Breathe - Dom Fera</option>
-            <option value="TempleofTime.mp3">Temple of Time - Soulrez</option>
-
-
-
+            <option value="nights.m4a">Nights Avicii</option>
+            <option value="baby_shark.m4a">Baby Shark</option>
+            <option value="wannadance.m4a">Wanna Dance</option>
+            <option value="tee.m4a">Tee</option>
+            <option value="eternalsunshine.mp3">Eternal Sunshine</option>
+            <option value="lastcarnival.mp3">Last Carnival</option>
+            <option value="bridgerton.m4a">Brigderton OST</option>
 
             </select>
-            
-            <!-- <input id="music_start" name="music_start" class="text-center text-info form-control"  placeholder="Music Start"> -->
-            <!-- <input id="music_length" name="music_length" class="text-center text-info form-control"  placeholder="Music Length"> -->
-
-            <!-- <div id="musicURLUpload" onclick="musicURLchange()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Download Music</div> -->
-            <!-- <div id="reloadMusic" onclick="reloadMusic()"  class="text-center text-info form-control" style="background-color: rgba(255, 20, 145, 0.24); color: black; border-radius:0.25em;  border: solid 1px deeppink;">Reload Music</div> -->
+            <div id="music" style="display:none"> </div>
             
         </div>
-
 
     </div>
 
     <body itemscope itemtype="http://schema.org/WebApplication">
 
         <div id="loading"  >
-            <!-- <img id="loading_gif" src='https://i.pinimg.com/originals/05/91/c7/0591c7d9ed972c451f02e9d52199f1d6.gif'/> -->
+
         </div>
 
         <div id="page_container">
             <div id="page_left_container" class="ui_region">
                 <h4>Audio Area </h4>
                 <div class="container">
-
-                    <div id="demo">
-                       
-                        <!-- This video comes from NASA Video Gallery https://www.youtube.com/watch?v=Zg7i4q_EX9E -->
-                        
         
-                        <!-- <p id="subtitle2" class="text-center text-info lyric" onclick="transferLyric(this)"> <em> New York (ayy) <br></p> -->
-                            <!-- <p class="text-center text-info lyric" onclick="transferLyric(this)">Concrete jungle where dreams are made of </em> -->
-                                <!-- ♪  -->
-                             <!-- <span id="play">
-                            <i class="glyphicon glyphicon-play"></i>
-                            Suggest
-                        </span> -->
-                    </p>
-        
-                    
-        
-        
-                    </div>
-        
-                    <form role="form" name="edit" style="display:flex; flex-direction:row" 
-                    
-                     id="full-form" enctype="multipart/form-data">
-
-                        
+                    <form role="form" name="edit" style="display:flex; flex-direction:row"  id="full-form" enctype="multipart/form-data">
 
                         <div class='video_interval'>
-<!-- 
-                            <div style="display:flex; margin-bottom:0.5em;">
-                                <div style='float:right; margin-left: auto; order: 2; '>
-                                    Upload Audio <input type="file" id="upload" />
-                                    <audio id="audio" controls>
-                                        <source src="" id="src" />
-                                      </audio>
-                                </div>
-                                
-
-                            </div> -->
-
-
-                            <!-- <div class="interval_action_bar" > -->
-                                <div style="display:flex; flex-direction:row;">
+                            <div style="display:flex; flex-direction:row;">
                                 <div id="play-button" class="play-button btn  btn-primary interval-button" onclick="playWaveSurfer()">
                                     <span id="play">
                                         <i class="glyphicon glyphicon-play"></i>
@@ -172,252 +96,149 @@
                                 </div> 
                                 <button type="button" class="" onclick="addInterval()">
                                     <img width='24px' src="https://static.thenounproject.com/png/2577717-200.png"> 
-                                   ADD INTERVAL
-                                  
-                                  
+                                    ADD INTERVAL
                                 </button>
-                               
                                 <button type="button" class="" onclick='deleteRegion()'>
                                     <img width='32px'  src="./static/images/trash.png">
                                     DELETE
-                                
-                               </button>
-                               <button type="button" class="button" onclick="saveRegions()">
-                             
-                                 <img width='24px' src="https://icons.veryicon.com/png/o/miscellaneous/utility/save-44.png">
-                                 SAVE
                                 </button>
-                                <!-- <button type="button" class="button" onclick="alignIntervals()">
-                            
-                                     <img width='24px' src="http://cdn.onlinewebfonts.com/svg/img_2532.png">
-                                     ALIGN INTERVALS
-                                    </button> -->
+                                <button type="button" class="button" onclick="saveRegions()">
+                                    <img width='24px' src="https://icons.veryicon.com/png/o/miscellaneous/utility/save-44.png">
+                                    SAVE
+                                </button>
+                                <button type="button" class="button" onclick="alignIntervals()">
+                                    <img width='24px' src="http://cdn.onlinewebfonts.com/svg/img_2532.png">
+                                    ALIGN INTERVALS
+                                </button>
 
                                 
                             </div>
-                                <!-- onclick="transferLyric(this)" -->
-                                
-                                <!-- <h5>TIME START</h5>
-                                <input id="start" class="interval_timestamp_area" name="start" />
-                                <h5>TIME END</h5>
-                                <input  id="end" class="interval_timestamp_area" name="end" /> -->
-                                
-                            <!-- </div> -->
-                            <!-- <h5>AUDIO WAVE</h5> -->
+
                             <div id="wave-timeline"></div>
+                            
+                            
+                            <div id="waveform_container">
                         
-                         
-                        <div id="waveform_container">
-                        
-                        
-                            <div id="waveform">
-                                
+                                <div id="waveform">
+                                </div>
                             </div>
-                        </div>
                                                 
-                        <div style="display:flex;">
+                            <div id="interval_number_bar" style="display:flex">
 
-                            <div style="width:50%; display:flex;">
-                                <input id="description" name="description" class="text-center text-info lyric form-control"  placeholder="Describe Interval">
-                            <button  type="button" class="interval-button" style="display: flex" onclick="brainstormGPT()"> 
+                                <div style="width:50%; display:flex;">
+                                    <!-- filler space -->
+                                </div>
                                 
-                                <img width='24px' src="https://cdn-icons-png.flaticon.com/128/5038/5038742.png">
-                                <span style="margin: 5px 0px 0px 0px">BRAINSTORM 
-                            </button>
-                            </div>
-                            <div style="display:flex; width:15%">
+                                <div style="display:flex; width:15%">
+                                    <h5>Interval #</h5>
+                                    <input id="interval_num"  class="form-control interval_num_area" rows="1" name="interval_num" >
+                                </div>
                             
-                                <h5>Interval #</h5>
-                                <input id="interval_num"  class="form-control interval_num_area" rows="1" name="interval_num" >
-                            </div>
-                           
-                            <div style="display:flex; width:20%">
-                                <h5 > BEGIN TIME:</h5><input id="start" class="form-control interval_timestamp_area" name="start" />
-                            </div>
-                           
-                            <div style=" display:flex; width:20%;">
-                                <h5> END TIME:</h5>
-                                <input  id="end" class=" form-control interval_timestamp_area" name="end" />
-                            </div>
-
+                                <div style="display:flex; width:20%">
+                                    <h5 > BEGIN TIME:</h5>
+                                    <input id="start" class="form-control interval_timestamp_area" name="start" />
+                                </div>
                             
-                           
-
-                        </div>
-                        
-                        <div></div>
-                         
-                        <!-- <div class="brainstorming_area">
-                            <div style="display:flex; flex-direction:row">
-                                <h5>Goal</h5>
-
-                            <textarea id='goal_info' class="form-control goal-info" placeholder="Write what you want to see in the video"></textarea>
-                            ### <input type="checkbox" value="on" id="isHold" name="isHold">Hold 
-                            <input type="checkbox" value="on" id="isLyric" name="isLyric">Lyric
-                            <div id="collapsible" class="interval-button" onclick="brainstormGPT()">SUGGEST <img width='24px' src="https://cdn-icons-png.flaticon.com/512/118/118063.png"></div>
-
+                                <div style=" display:flex; width:20%;">
+                                    <h5> END TIME:</h5>
+                                    <input  id="end" class=" form-control interval_timestamp_area" name="end" />
+                                </div>
 
                             </div>
-                            
-                           
-                                                    
-                            <div>
-                                <div class="content"></div>
-                            </div>
-                        </div> -->
-                       
                         
-                        
-
                             <div id="interval_previews">
-                                
                                 
                                 <div id="start_prompt_area"  ondrop="drop(event)" ondragover="allowDrop(event)" class="preview_prompt_area">
                                     
-
                                     <input class="preview_input"  name="start_frame_preview" >
 
                                         <img class="main_frame_preview"  id="start_frame_preview" onerror="setDefaultImg(this)" src='')}}>
-                                    
 
                                     <div class="preview_form_area">
 
-                                       <!-- <h5> INTERVAL BEGINNING PROMPT</h5> -->
-                                    <!-- <input id="note" class="form-control" rows="1" name="region_number"></input> -->
-                                    <!-- <label for="note">PROMPT</label> -->
-                                    <textarea id="start_note" placeholder='Starting prompt' class="form-control" rows="1" name="start_note"></textarea>
-                                    <input id="start_seed" placeholder='Start Seed' class="form-control seed_info interval_timestamp_area" name="start_seed" >
-                                        
-                                    <!-- <textarea id="endnote" class="form-control" rows="2" name="endnote"></textarea> -->
-                                    <!-- <button class="btn preview-btn" onclick="generateImage()" >
-                                        <img width='32px'  src="./static/images/dice.png">
-                                          PREVIEW</button> -->
-                                         
-
-                                
+                                        <textarea id="start_note" placeholder='Starting prompt' class="form-control" rows="1" name="start_note"></textarea>
+                                        <input id="start_seed" placeholder='Start Seed' class="form-control seed_info interval_timestamp_area" name="start_seed" >
+                                            
+        
                                     </div>
-                                    
-                                    
-
+                                
 
                                 </div>
+
                                 <div id="end_prompt_area" class="preview_prompt_area" ondrop="drop(event)" ondragover="allowDrop(event)" >
-                                    <!-- <h5>INTERVAL END</h5> -->
+
                                     <div class="preview_form_area" >
                             
-
-                                        <!-- <input id="note" class="form-control" rows="1" name="region_number"></input> -->
-                                        <!-- <label for="note">PROMPT</label> -->
                                         <textarea id="end_note" placeholder='Ending prompt' class="form-control" rows="1" name="end_note"></textarea>
                                         <input id="end_seed" placeholder='End Seed' class="form-control seed_info interval_timestamp_area" name="end_seed" >
-                                        <!-- <textarea id="endnote" class="form-control" rows="2" name="endnote"></textarea> -->
-                                
-                                        <!-- <button class="btn preview-btn" onclick="generateEndImage()">
-                                            <img width='32px' src="./static/images/dice.png">
-                                            PREVIEW
-                                        </button> -->
-                                
 
-                                    </div>
+                                </div>
 
-                                       
                                     <input name="end_frame_preview" class="preview_input"  src={{url_for('static', filename='previews/3.jpg')}}>
                                     <img class="main_frame_preview"  onerror="setDefaultImg(this)" id="end_frame_preview" src='')}}>
                                      
                                 </div>
                             </div>
                             <div class="interval_action_bar">
-                                
 
+                                <input type="checkbox" id="audioReactivityFlag" style="display:none" name="audioReactivityFlag">
+                                <label for="audioReactivityFlag" style="display:none"> Audio Reactivity Flag</label><br>
+
+                                
                                 <button type="button" style="float:right" class="interval-button" onclick="generateInterval()" title="Export annotations to JSON">
                                     <img width='24px' src="https://flaticons.net/icon.php?slug_category=miscellaneous&slug_icon=magic-wand">
                                     GENERATE INTERVAL
-                                    </button>
-
-                               
+                                </button>
+              
                             </div>
 
-                            <!-- <hr > -->
-                           
-
                             <div>
+       
+                                <div class="generate_preview_title">
+                                    <h5> <img width='28px' style="margin-left:0.25em; margin-right:1em" src="https://cdn-icons-png.flaticon.com/512/3521/3521848.png" onclick="brainstorm()">BRAINSTORMING AREA </h5>
+                                </div>
 
-                             
-                                    <!-- <img width='24px' src="https://www.pngkit.com/png/full/333-3335263_browser-history-clock-icon-vector-white.png"> -->
-                                    <div class="generate_preview_title">
-                                        <h5  > <img width='28px' style="margin-left:0.25em; margin-right:1em" src="https://cdn-icons-png.flaticon.com/512/3521/3521848.png" onclick="brainstorm()">BRAINSTORMING AREA </h5>     
-                                    </div>
-                                   
-                                
-                       
                                 <div id="preview_history_area">
-                                   
+                                                                    
                                     <div style="display:flex; flex-direction:column;">
 
-                                       
-                                            
-                                            
-                                            <!-- <div class="upload_file_box">
-                                                <input type="checkbox" id="imgChecked" name="imgChecked" value="on">
-                                                ### <input type="hidden" name="imgChecked" value="off"> 
-                                                Use Img
-                                                 
-                                                <img class="main_frame_preview upload" id="initialImgPreview" src="https://static.thenounproject.com/png/3752772-200.png">
-                                                <input class="custom-file-input" name="image" type="file" id="initialImg" onchange="sendInitialImg(this)" >
-                                                
-                                            </div> -->
-                                            
+                                        <div style="display:flex; flex-direction:row; width:90%; margin-top:1em;"></div>
 
-                                       
-                                            <div style="display:flex; flex-direction:row; width:90%; margin-top:1em;">
-                                                <!-- <textarea id='goal_info' class="form-control goal-info" placeholder="Type goal for the video interval / Type lyrics relevant to it"></textarea> -->
-                                                <!-- <input type="checkbox" value="on" id="isLyric" name="isLyric">Lyric -->
-                                                <!-- <textarea id='translated_lyrics' style='display:none' class="form-control goal-info" placeholder="Translated"></textarea> -->
-
-
-                                                <!-- <div id="collapsible" class="interval-button" onclick="brainstormGPT()">
-                                                     <img width='24px' src="https://cdn-icons-png.flaticon.com/512/118/118063.png">
-                                                    SUGGEST
-                                                </div> -->
-
-
+                                            <div style="display:flex; flex-direction:row; width:100%;">                                 
+                                                 <input id="description" name="description" class="text-center text-info lyric form-control brainstorm-prompt"  placeholder="Describe Interval">
+                                               
+                                                 <button  type="button" class="interval-button" style="display: inline-block; float: right; width: 150px" onclick="brainstormGPT()"> 
+                                
+                                                    <img width='24px' src="https://cdn-icons-png.flaticon.com/128/5038/5038742.png">
+                                                    <span style="margin: 5px 0px 0px 0px">BRAINSTORM 
+                                                 </button>
+                                                  
                                             </div>
 
-                                            <div style="display:flex; flex-direction:row; width:100%;">
-                                                <!-- <input type="text" id="subject_prompt" name="test_prompt" placeholder="Start prompt" class="form-control required" rows="2"  list="startPrompts" /> -->
-                                                <!-- <h5 width="10%; font-size:7em;">→</h5> -->
-                                                <!-- <input type="text" id="subject_prompt2" name="test_prompt2"  placeholder="End prompt" class="form-control required" rows="2" list="endingPrompts" /> -->
+                                            <div style="display:flex; flex-direction: row;">
+                                                <h6 class="subject_empty"  style="width: 50%">PROMPTS </h6>
+                
+                                            </div>
                                                
-                                             
-                                                <!-- <textarea id="test_prompt2" placeholder='Try a prompt' class="form-control" rows="2" name="test_prompt"></textarea> -->
-                                               
+                                            <div  style="display:flex; flex-direction:row; width:100%;">
+                                                <div style="display:flex; flex-direction: row; width: 50%;">
+                                                    <div class="pill subject_empty" id="startSubject1" onclick="pillClick(this)" >digital painting</div>
+                                                    <div class="pill  subject_empty" id="startSubject2" onclick="pillClick(this)">illustration</div>
+                                                    <div class="pill  subject_empty" id="startSubject3" onclick="pillClick(this)" >3d render</div>
+                                                    <div class="pill  subject_empty" id="startSubject4" onclick="pillClick(this)" >3d render</div>
+                                                    <div class="pill  subject_empty" id="startSubject5" onclick="pillClick(this)" >3d render</div>
+<!--                                                     <div class="pill  subject_empty" id="startSubject6" onclick="pillClick(this)" >3d render</div>
+                                                    <div class="pill  subject_empty" id="startSubject7" onclick="pillClick(this)" >3d render</div>
+                                                    <div class="pill  subject_empty" id="startSubject8" onclick="pillClick(this)" >3d render</div>
+                                                    <div class="pill  subject_empty" id="startSubject9" onclick="pillClick(this)" >3d render</div> -->
                                                   
-                                                   </div>
-                                                   <!-- <h5 class=""  style="width: 50%">BRAINSTORMING AREA </h5> -->
-                                                   <div style="display:flex; flex-direction: row;">
-                                                    <h6 class="subject_empty"  style="width: 50%">SUBJECTS </h6>
-                                                     <!-- <h6 style="width:50%">END SUBJECT</h6> -->
+                                                </div>          
+                                            </div>
+                                            <div style="display:flex; flex-direction: row;">
+                                                <h6 class="empty"  style="width: 50%">CHOOSE STYLES </h6> 
+                                            </div> 
 
-                                                   </div>
-                                               
-                                                <div  style="display:flex; flex-direction:row; width:100%;">
-                                                    <div style="display:flex; flex-direction: row; width: 50%;">
-                                                        <div class="pill subject_empty" id="startSubject1" onclick="subjectPillClick(this)" >digital painting</div>
-                                                <div class="pill  subject_empty" id="startSubject2" onclick="subjectPillClick(this)">illustration</div>
-                                                <div class="pill  subject_empty" id="startSubject3" onclick="subjectPillClick(this)" >3d render</div>
-                                                    </div>
-
-                                                
-                                                   </div>
-                                                
-                                               
-                                                   <div style="display:flex; flex-direction: row;">
-                                                    <h6 class="empty"  style="width: 50%">CHOOSE STYLES </h6> 
-                                                    <!-- <h6 style="width:50%">END STYLE</h6> -->
-
-                                                   </div> 
-
-                                                   <div style="display: flex; flex-direction: row;">
+                                            <div style="display: flex; flex-direction: row;">
                                                 <div  style="display:flex; flex-direction:column; width:50%;">
                                                     <div style="display:flex; flex-direction: row">
                                                         <div class="color-style pill header" id="color_start0" onclick="pillClick(this)" > COLOR</div>
@@ -426,9 +247,7 @@
                                                         <div class="color-style pill empty " id="color_start3" onclick="pillClick(this)"></div>
                                                         <div class="color-style pill empty " id="color_start4" onclick="pillClick(this)"></div>
                                                         <div class="color-style pill empty " id="color_start5" onclick="pillClick(this)" ></div>
-                                                        
-
-
+                                                    
                                                     </div>
                                                     <div style="display:flex; flex-direction: row">
                                                         <div class="color-style pill header" id="angle_start0" onclick="pillClick(this)"> ANGLE</div>
@@ -437,10 +256,7 @@
                                                         <div class="pill angle-style empty " id="angle_start3" onclick="pillClick(this)" > </div>
                                                         <div class="pill angle-style empty " id="angle_start4" onclick="pillClick(this)" > </div>
                                                         <div class="pill angle-style empty " id="angle_start5" onclick="pillClick(this)"> </div>
-                                                        
-
-
-
+                                                
                                                     </div>                                                 
                                                     <div style="display:flex; flex-direction: row">
                                                         <div class="action-style pill header" id="time_start0" > TIME</div>
@@ -451,111 +267,53 @@
                                                         <div class="pill action-style empty" id="time_start4"  onclick="pillClick(this)"> </div>
                                                         <div class="pill action-style empty" id="time_start5" onclick="pillClick(this)" > </div>
 
-
-
-
                                                     </div> 
 
                                                 </div>
-                                                <!-- <div  style="display:flex; flex-direction:column; width:50%;">
-                                                    <div style="display:flex; flex-direction: row">
-                                                        <div class="pill" id="color_end1" contenteditable="true" value="End..."></div>
-                                                        <div class="pill" id="color_end2" contenteditable="true" value="End..."></div>
 
-
-                                                    </div>                                                
-                                                    <div style="display:flex; flex-direction: row">
-                                                        <div class="pill" id="angle_end1" contenteditable="true" value="End..."></div>
-                                                        <div class="pill" id="angle_end2" contenteditable="true" value="End..."></div>
-
-
-                                                    </div>  
-                                                    
-                                                    <div style="display:flex; flex-direction: row">
-                                                        <div class="pill" id="time_end1" contenteditable="true" value="End..."></div>
-                                                        <div class="pill" id="motion_end2" contenteditable="true" value="End..."></div>
-
-
-                                                    </div>  
-                                                     
- 
-                                                 </div> -->
-                                                </div>
-                                                   <div style="display:flex; flex-direction:row; width:90%;">
+                                            </div>
+                                            <div style="display:flex; flex-direction:row; width:90%;">
                                                 <input type="text" ondrop="dropPromptOnly(event)" ondragover="allowDrop(event)" id="start_prompt" name="start_prompt" onclick="changePromptFocus(this)" placeholder="Start prompt" class="active_prompt form-control" rows="2"  list="startPrompts" />
-                                                <!-- <h5 width="10%; font-size:7em;">→</h5> -->
-                                                <!-- <input type="text" id="end_prompt" name="end_prompt" onclick="changePromptFocus(this)" placeholder="End prompt" class=" form-control" rows="2" list="endingPrompts" /> -->
-                                                <!-- <datalist id="startPrompts">
-                                                <option id="color_start" value="..."></option>
-                                                <option id="angle_start" value="..."></option>
-                                                <option id="time_start" value="..."></option>
-                                                </datalist> -->
-                                                <!-- <textarea id="test_prompt2" placeholder='Try a prompt' class="form-control" rows="2" name="test_prompt"></textarea> -->
-                                                <!-- <datalist id="endingPrompts">
-                                                    <option id="color_end" value="End..."></option>
-                                                    <option id="angle_end" value="..."></option>
-                                                    <option id="time_end" value="..."></option>
-                                                    </datalist> -->
 
-
-                                                
-                                                <!-- <textarea id="test_seed2" placeholder='Seed (optional)' class="form-control" rows="1" name="test_seed"></textarea> -->
-
-                                                <input type="text" id="test_seed" placeholder='Seed (optional)' class="form-control" rows="1" name="test_seed">
+                                                <input type="text" id="test_seed" style="display:none" placeholder='Seed (optional)' class="form-control" rows="1" name="test_seed">
                                                 <button type="button" class="btn preview-btn" onclick=" generateBrainstormImg();">
                                                     <img width='32px'  src="https://cdn-icons-png.flaticon.com/128/3971/3971176.png">
-                                                    PREVIEW IMG</button>
+                                                    PREVIEW IMG
+                                                </button>
                                             </div>
-                                            
-
-                                            
-                                            
-                                        
-                                            
-                                           
-                                                <!-- <textarea id="test_prompt" placeholder='Try a prompt' class="form-control" rows="2" name="test_prompt"></textarea> -->
-                                                <!-- <input id="test_seed" class="form-control seed_info interval_timestamp_area" name="test_seed" > -->
-                                               
-                                          
-                                    </div>
+                                </div>
                                         
                                             
             
                             
 
                                     
-                                    <h5 style="color:black"><img width='20px' src="https://cdn-icons-png.flaticon.com/512/61/61122.png"> &nbsp; HISTORY</h5>
+                                <h5 style="color:black"><img width='20px' src="https://cdn-icons-png.flaticon.com/512/61/61122.png"> &nbsp; HISTORY</h5>
                                     
-                                    <div id="generations_container">
-                                        
-                                        {% for generation in generations%}
+                                <div id="generations_container">
                                     
-                                            <div class="generation_container show" >
-                                                <div class="cardcaption">
-                                                    <div class="promptparams">
-                                                        {{generation[0][12:-4]}} 
-                                                    </div>
-                                                    
-                                                    <!-- <img class="generation_action_button" onclick="regenerateFrame(this);" width='32px' src={{url_for('static', filename='images/refresh.png')}}/> -->
-                                    
+                                    {% for generation in generations%}
                                 
-                                
+                                        <div class="generation_container show" >
+                                            <div class="cardcaption">
+                                                <div class="promptparams">
+                                                    {{generation[0][12:-4]}} 
                                                 </div>
-                                    
-                                                <img draggable="true" ondragstart="drag(event)"  id={{generation[1]}} class="generated_image" onclick="generatedImageClick(this)" alt={{generation[13:-5]}}  title={{generation[13:-5]}} src={{url_for('static', filename=generation[0])}}/>
-                                                <img class="generation_action_button" onclick="varyImage(this);" width='32px' src="https://cdn2.iconfinder.com/data/icons/media-player-ui/512/Media-Icon-21-512.png"/>
-
-                                                
-                                                <img class="generation_action_button" onclick="hideContainer(this);" width='32px' src="https://cdn-icons-png.flaticon.com/512/3515/3515498.png"/>
                                                 
                                             </div>
-                                        
-                                        {% endfor %}
+                                
+                                            <img draggable="true" ondragstart="drag(event)"  id={{generation[1]}} class="generated_image" onclick="generatedImageClick(this)" alt={{generation[13:-5]}}  title={{generation[13:-5]}} src={{url_for('static', filename=generation[0])}}/>
+                                            <img class="generation_action_button" onclick="varyImage(this);" width='32px' src="https://cdn2.iconfinder.com/data/icons/media-player-ui/512/Media-Icon-21-512.png"/> 
+                                            <img class="generation_action_button" onclick="hideContainer(this);" width='32px' src="https://cdn-icons-png.flaticon.com/512/3515/3515498.png"/>
+                                            
+                                        </div>
                                     
-                                    </div>
+                                    {% endfor %}
                                 
                                 </div>
+                                
                             </div>
+                        </div>
 
 
                             
@@ -563,140 +321,76 @@
                             
        
                             
-                        </div>
+                    </div>
                  
                         
-                    </form>
-                </div>
+                </form>
+            </div>
                 
 
                 
                 
                
             
-            </div>
-            <div id="page_right_container" class="ui_region">
-                
-                <div class="video_area">
-                    <div style="display:flex; flex-direction: row">
-                        <h4 >Video Area </h4>   
+        </div>
+        <div id="page_right_container" class="ui_region">
+            
+            <div class="video_area">
+                <div style="display:flex; flex-direction: row">
+                    <h4 >Video Area </h4>   
                     <div style="width:70%; position: relative; top:1em; ">  
                         <img id="deleteVideo" onclick="deleteStitchedVideo()" width='32px' src={{url_for('static', filename='images/trash.png')}}/>
-                     </div>
                     </div>
-                    
-
-
-                        <video style="margin: 0 auto;" id="input_video" src={{output_video}} type="video/mpeg" onclick="playRegionVideo(this)"> 
-
-               
-                    
-                    
-                    </video>
-
-                    <img id="deleteVideo" onclick="deleteStitchedVideo()" width='32px' src="https://cdn-icons-png.flaticon.com/512/3515/3515498.png"/>
-
-
-                    <!-- <button class="play-button btn btn-primary btn-block interval-button" data-action="play2">
-                        <span id="playvid2">
-                            <i class="glyphicon glyphicon-play"></i>
-                            Play
-                        </span>
-    
-                        <span id="pausevid2" style="display: none">
-                            <i class="glyphicon glyphicon-pause"></i>
-                            Pause
-                        </span>
-                    </button> -->
-    
-
                 </div>
                 
-                <!-- <video style="margin: 0 auto;" onclick="playRegionVideo(this)"  id="input_video" src={{url_for('static', filename='output/output.mp4')}} type="video/mpeg"> 
-                    
-                </video> -->
-  
-        
+                <video style="margin: 0 auto;" id="input_video" src={{output_video}} type="video/mpeg" onclick="playRegionVideo(this)"> </video>
             </div>
-           
-        </div> 
-
-        <!-- <button type="button" class="generate_video" onclick='generateVideo()' >Make video from prompts</button>  -->
-
-        
-        
-        <div id="tracks_container" class="ui_region">
-            
-            <h4> Tracks </h4>
-
-       
-            {% for interval_name, interval_data in frames.items()%}
-
-            <div style="display:flex; flex-direction:column">
-                <p class ='interval_prompts'>{{interval_name}}</p>
-                <div class="video_track" >
-                    <div style="display:flex; flex-direction:column">
-                        <h5>VIDEO INTERVAL</h5> 
-                        <video height="100%"  onclick="playRegionVideo(this)" src="{{interval_data['interval_video']}}"></video>
-                        <img class="generation_action_button" onclick="hideTrack(this);" width='32px' src={{url_for('static', filename='images/trash.png')}}/>
-
-                    </div>
-
-                    <div style="display:flex; flex-direction:column">
-                        <h5>FRAMES</h5> 
-                       <div>
-                            {% for frame in interval_data['interval_frames'] %}
-                    
-
-        
-                            <img class="frame_preview" src={{url_for('static', filename=frame)}}>
-
-                
-                            {% endfor %}
-                        </div>
-                        
-                    </div>
-                      
-                        
-
-
-                <!-- <div class="dice_button">
-                    <img width='32px' src="./static/images/dice.png">
-                    <p>END</p>
-                </div> -->
-
-                </div>
-                
-                
-                
-            {% endfor %}
-                <div><button type="button" class='stitch' onclick='stitchVideo()'> STITCH VIDEO <img width='64px' src={{url_for('static', filename='images/stitch.gif')}}></div>
-            </div>
-
-
         </div>
+           
+    </div> 
 
-        <!-- <script>
+    <div id="tracks_container" class="ui_region">
+        
+        <h4> Tracks </h4>
+    
+        {% for interval_name, interval_data in frames.items()%}
+
+        <div style="display:flex; flex-direction:column">
+            <p class ='interval_prompts'>{{interval_name}}</p>
+            <div class="video_track" >
+                <div style="display:flex; flex-direction:column">
+                    <h5>VIDEO INTERVAL</h5> 
+                    <video height="100%"  onclick="playRegionVideo(this)" src="{{interval_data['interval_video']}}"></video>
+                    <img class="generation_action_button" onclick="hideTrack(this);" width='32px' src={{url_for('static', filename='images/trash.png')}}/>
+
+                </div>
+
+                <div style="display:flex; flex-direction:column">
+                    <h5>FRAMES</h5> 
+                    <div>
+                        {% for frame in interval_data['interval_frames'] %}
+                
+
+    
+                        <img class="frame_preview" src={{url_for('static', filename=frame)}}>
+
+            
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+                
+            </div>
+                        
+        {% endfor %}
+            <div>
+                <button type="button" class='stitch' onclick='stitchVideo()'> STITCH VIDEO <img width='64px' src={{url_for('static', filename='images/stitch.gif')}}>
+            </div>
+        </div>
+    </div>
 
 
-            var coll = document.getElementsByClassName("collapsible");
-            var i;
-
-            for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                content.style.display = "none";
-                } else {
-                content.style.display = "block";
-                }
-            });
-            }
-
-        </script> -->
-
-        <script>
+    <script>
             function handleFiles(event) {
                 var files = event.target.files;
                 $("#src").attr("src", URL.createObjectURL(files[0]));
@@ -729,119 +423,20 @@
 
             }
 
-            // document.getElementById("upload").addEventListener("change", handleFiles, false);
+
+        function musicURLchange () {
             
-            // $.ajax({
-            //     type: "POST",
-            //     url: '/upload_audio',
-            //     data: JSON.stringify({ 
-                    
-
-            //         'audio_file': $("#audio")[0].children[0].src,
-
-            //     } ),
-            //     processData: false,
-            //     cache: false,
-            //     async: false,
-            //     contentType: 'application/json;charset=UTF-8',
-            //     success: function(data) {
-            
-                    
-            //     },
-            //     error: function (request, status, error) {
-                   
-            //         console.log("Error");
-            
-            //     }
-            // });
-
-            function musicURLchange () {
-                
-
-                $.ajax({
-                type: "POST",
-                url: '/download_audio',
-                data: JSON.stringify({ 
-                    
-
-                    'audio_file': $("#urltomusic")[0].value,
-                    'music_start': $("#music_start")[0].value,
-
-                    'music_length': $("#music_length")[0].value,
-
-
-                } ),
-                processData: false,
-                cache: false,
-                async: false,
-                contentType: 'application/json;charset=UTF-8',
-                success: function(data) {
-                    console.log(data["audio_filename"]);
-                    wavesurfer.load(data["audio_filename"]);
-                    
-                },
-                error: function (request, status, error) {
-                   
-                    console.log("Error");
-            
-                }
-            });
-
-            }
-            
-
-            function reloadMusic() {
-                reloadMusic: $("#reloadMusic")[0].value,
-                console.log("./static/audio/" + reloadMusic);
-                mediaElt = "./static/audio/" + reloadMusic;
-                wavesurfer.load(mediaElt);
-                
-
-                $.ajax({
-                type: "POST",
-                url: '/change_audio',
-                data: JSON.stringify({ 
-                    
-                    'audio_file': $("#reloadMusic")[0].value,
-
-
-                } ),
-                processData: false,
-                cache: false,
-                async: false,
-                contentType: 'application/json;charset=UTF-8',
-                success: function(data) {
-                    console.log(data["audio_filename"]);
-                    wavesurfer.load(data["audio_filename"]);
-                    
-                },
-                error: function (request, status, error) {
-                   
-                    console.log("Error");
-            
-                }
-            });
-
-
-            }
-
-            function musicChange() {
-
-            //Get the select select list and store in a variable
-            var e = $("#music_dropdown")[0];
-
-            //Get the selected value of the select list
-            var music_choice = e.options[e.selectedIndex].value;
-
-            // alert(music_choice); 
-            // alert(wavesurfer.load("./static/audio/" + music_choice));
 
             $.ajax({
             type: "POST",
-            url: '/register_music_change',
+            url: '/download_audio',
             data: JSON.stringify({ 
                 
-                'music_choice': "./static/audio/" + music_choice,
+
+                'audio_file': $("#urltomusic")[0].value,
+                'music_start': $("#music_start")[0].value,
+
+                'music_length': $("#music_length")[0].value,
 
 
             } ),
@@ -850,20 +445,90 @@
             async: false,
             contentType: 'application/json;charset=UTF-8',
             success: function(data) {
-                console.log("success");
-                
-                wavesurfer.load( "./static/audio/" + music_choice);
-                console.log(data["music"]);
-                
+                console.log(data["audio_filename"]);
+                wavesurfer.load(data["audio_filename"]);
                 
             },
             error: function (request, status, error) {
-            
+                
                 console.log("Error");
+        
+            }
+        });
 
+        }
+            
+
+        function reloadMusic() {
+
+            wavesurfer.load( "./static/audio/" + $("#music")[0].innerText);            
+
+            $.ajax({
+            type: "POST",
+            url: '/change_audio',
+            data: JSON.stringify({ 
+                
+                'audio_file': $("#music")[0].value,
+
+
+            } ),
+            processData: false,
+            cache: false,
+            async: false,
+            contentType: 'application/json;charset=UTF-8',
+            success: function(data) {
+                console.log(data["audio_filename"]);
+                wavesurfer.load(data["audio_filename"]);
+                
+            },
+            error: function (request, status, error) {
+                
+                console.log("Error");
+        
             }
             });
-            }
+
+
+        }
+
+        function musicChange() {
+
+        //Get the select select list and store in a variable
+        var e = $("#music_dropdown")[0];
+
+        //Get the selected value of the select list
+        var music_choice = e.options[e.selectedIndex].value;
+            
+        $("#music")[0].innerText =  music_choice;
+
+        // alert(music_choice); 
+        // alert(wavesurfer.load("./static/audio/" + music_choice));
+
+        $.ajax({
+        type: "POST",
+        url: '/register_music_change',
+        data: JSON.stringify({ 
+            
+            'music_choice': "./static/audio/" + music_choice,
+
+
+        } ),
+        processData: false,
+        cache: false,
+        async: false,
+        contentType: 'application/json;charset=UTF-8',
+        success: function(data) {
+            console.log("success");
+            reloadMusic();
+            
+        },
+        error: function (request, status, error) {
+        
+            console.log("Error");
+
+        }
+        });
+        }
 
         </script>
 

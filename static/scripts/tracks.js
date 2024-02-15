@@ -150,11 +150,7 @@ function generateImage(prompt) {
     type: "POST",
     url: '/call_generate',
     data: formData
-    // JSON.stringify({ 
-    // "prompt": $("#test_prompt")[0].value,
-    //   "interval_num":  $("#interval_num")[0].value,
-    // "json_data":json_data,
-    // } )
+
     ,
     processData: false,
     cache: false,
@@ -163,15 +159,7 @@ function generateImage(prompt) {
     success: function(data) {
       $('#loading').hide();
 
-      // $("#start_frame_preview")[0].src = "./static/previews/" + $("#interval_num")[0].value.toString() + "_start"  + ".jpg";
-
-      // $( "#start_frame_preview" ).load(window.location.href + " #start_frame_preview" );
-
-
-      
-      // $( ".preview_form_area" ).load(window.location.href + " .preview_form_area" );
-       
-        
+    
    },
     error: function (request, status, error) {
         clearInterval(handle);
@@ -215,7 +203,9 @@ function deleteStitchedVideo() {
 
 function generateInterval() {
 
-  $('#loading').show();
+    console.log($("#audioReactivityFlag")[0].checked);
+  
+    $('#loading').show();
   
   json_data = JSON.stringify(localStorage.regions)
 
@@ -233,6 +223,7 @@ function generateInterval() {
       "end_note": $("#end_note")[0].value,
       "start_seed": $("#start_seed")[0].value,
       "end_seed": $("#end_seed")[0].value,
+      "audio_reactive_flag": $("#audioReactivityFlag")[0].checked,
 
       // "end_interval_note": $("#endnote")[0].value,
       } ),
@@ -256,32 +247,11 @@ function generateInterval() {
   });
 }
 
-function regenerateInterval(elem) {
-  var promptToRegenerate = elem.parentNode.parentNode.parentNode.querySelector('.interval_prompts').innerHTML;
-  generateImage(promptToRegenerate, elem.parentNode.children[0].src);
-}
-
-// function playMainVideo() {
-//   video = $("#input_video")[0];
-//   // const isVideoPlaying = video => !!(video.currentTime > 0 && !video.paused && !video.ended && video.readyState > 2);
-//   // console.log(isVideoPlaying);
-//   video.onplaying = function() {
-//     $("#input_video")[0].pause();
-//     return;
-//   };
-
- 
-//   $("#input_video")[0].play();
-// }
 
 function generateVideo() {
 
   $('#loading').show();
   json_data = JSON.stringify(localStorage.regions)
-  // start_prompt = $("#text_prompt")[0].value;
-  // middle_prompt = $("#middle_prompt")[0].value;
-  // end_prompt = $("#end_prompt")[0].value;
-  // seed = $("#seed_prompt")[0].value;
 
   $.ajax({
       type: "POST",
