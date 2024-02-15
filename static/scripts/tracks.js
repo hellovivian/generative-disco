@@ -1,3 +1,104 @@
+/**
+ * Filename: tracks.js
+ * Author: Vivian Liu
+ * Functions here manage logic that is specific to the tracks area of the application.
+ */
+
+
+
+
+/**
+ * Processes data with a callback function.
+ *
+ * @param {any} No params but collects data from the form to pass to the backend as a JSON payload.
+ * @returns {any} None but triggers the tracks container to update to reflect the newly generated interval.
+ */
+function generateInterval() {
+
+    console.log($("#audioReactivityFlag")[0].checked);
+  
+    $('#loading').show();
+  
+  json_data = JSON.stringify(localStorage.regions)
+
+  $.ajax({
+      type: "POST",
+      url: '/generate_interval',
+      timeout: 1000 * 60 * 3,
+      data: JSON.stringify({ 
+      "json_data":json_data,
+      "current_interval_start": $("#start")[0].value,
+      "current_interval_end": $("#end")[0].value,
+      "interval_num": $("#interval_num")[0].value,
+
+      "start_note": $("#start_note")[0].value,
+      "end_note": $("#end_note")[0].value,
+      "start_seed": $("#start_seed")[0].value,
+      "end_seed": $("#end_seed")[0].value,
+      "audio_reactive_flag": $("#audioReactivityFlag")[0].checked,
+
+      // "end_interval_note": $("#endnote")[0].value,
+      } ),
+      processData: false,
+      cache: false,
+      async: true,
+      contentType: 'application/json;charset=UTF-8',
+      success: function(data) {
+        $('#loading').hide();
+        updateTracks();
+
+        
+         
+          
+     },
+      error: function (request, status, error) {
+          clearInterval(handle);
+          console.log("Error");
+
+      }
+  });
+}
+
+/**
+ * Processes data with a callback function.
+ *
+ * @param {any} No params but collects start prompt and seed from the form to pass to the backend as a JSON payload.
+ * @returns {any} None but triggers the generations container to update to reflect the newly generated image.
+ */
+function generateBrainstormImg() {
+
+  $("#loading").show();
+  var relevantData = {
+    "start_prompt": $("#start_prompt")[0].value,
+    "test_seed": $("#test_seed")[0].value,
+    // "end_prompt": $("#end_prompt")[0].value,
+    
+  }
+
+  $.ajax({
+    type: "POST",
+    url: '/generate_brainstorm_img',
+    data: JSON.stringify(relevantData)
+    ,
+    processData: false,
+    cache: false,
+    async: true,
+    contentType: 'application/json;charset=UTF-8',
+    success: function(data) {
+      $("#loading").hide();
+      $("#generations_container").load( " #generations_container");
+    
+   },
+    error: function (request, status, error) {
+        clearInterval(handle);
+        console.log("Error");
+
+    }
+  });
+
+}
+
+
 let added_frames = 0;
 function addFrame(progress) {
 
@@ -13,6 +114,7 @@ function addFrame(progress) {
     //  + "left='" + left_margin.toString() + "px'>";
     added_frames += 1;
 }
+
 
 function generateEndImage(prompt) {
 
@@ -82,38 +184,6 @@ $('#loading').bind('ajaxStart', function(){
   $(this).hide();
 });
 
-function generateBrainstormImg() {
-
-  $("#loading").show();
-  var relevantData = {
-    "start_prompt": $("#start_prompt")[0].value,
-    "test_seed": $("#test_seed")[0].value,
-    // "end_prompt": $("#end_prompt")[0].value,
-    
-  }
-
-  $.ajax({
-    type: "POST",
-    url: '/generate_brainstorm_img',
-    data: JSON.stringify(relevantData)
-    ,
-    processData: false,
-    cache: false,
-    async: true,
-    contentType: 'application/json;charset=UTF-8',
-    success: function(data) {
-      $("#loading").hide();
-      $("#generations_container").load( " #generations_container");
-    
-   },
-    error: function (request, status, error) {
-        clearInterval(handle);
-        console.log("Error");
-
-    }
-  });
-
-}
 
 function generateImage(prompt) {
 
@@ -170,6 +240,10 @@ function generateImage(prompt) {
 
 }
 
+/**
+ * Deletes a stitched video, triggers the /delete_stitched_video endpoint.
+ *
+ */
 function deleteStitchedVideo() {
   $.ajax({
     type: "POST",
@@ -201,53 +275,10 @@ function deleteStitchedVideo() {
 
 }
 
-function generateInterval() {
 
-    console.log($("#audioReactivityFlag")[0].checked);
-  
-    $('#loading').show();
-  
-  json_data = JSON.stringify(localStorage.regions)
-
-  $.ajax({
-      type: "POST",
-      url: '/generate_interval',
-      timeout: 1000 * 60 * 3,
-      data: JSON.stringify({ 
-      "json_data":json_data,
-      "current_interval_start": $("#start")[0].value,
-      "current_interval_end": $("#end")[0].value,
-      "interval_num": $("#interval_num")[0].value,
-
-      "start_note": $("#start_note")[0].value,
-      "end_note": $("#end_note")[0].value,
-      "start_seed": $("#start_seed")[0].value,
-      "end_seed": $("#end_seed")[0].value,
-      "audio_reactive_flag": $("#audioReactivityFlag")[0].checked,
-
-      // "end_interval_note": $("#endnote")[0].value,
-      } ),
-      processData: false,
-      cache: false,
-      async: true,
-      contentType: 'application/json;charset=UTF-8',
-      success: function(data) {
-        $('#loading').hide();
-        updateTracks();
-
-        
-         
-          
-     },
-      error: function (request, status, error) {
-          clearInterval(handle);
-          console.log("Error");
-
-      }
-  });
-}
-
-
+/**
+ * Calls generate_video endpoint. Deprecated for generate_interval. TO-DO: delete.
+ */
 function generateVideo() {
 
   $('#loading').show();
@@ -280,12 +311,19 @@ function generateVideo() {
 }
 
 
+/**
+ * Refreshes track area to reflect the newly generated track.
+ */
 function updateTracks()
-{ 
+    { 
         $( "#tracks_container" ).load(window.location.href + " #tracks_container" );
-  }
+    }
 
 
+/**
+ * Plays the element. 
+ *
+ */
 function playRegionVideo(element) {
     
  
@@ -325,20 +363,33 @@ function dropPromptOnly(ev) {
       $("#test_seed")[0].value = seed;
 }
 
+
+/**
+ * allowDrop of drag-and-drop functionality, which allows the dropover on an element.
+ *
+ */
 function allowDrop(ev) {
     ev.preventDefault();
   }
-  
-  function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-    
-  }
+
+/**
+* Drag of drag-and-drop functionality. Transfers data attached to element.
+*
+*/
+function drag(ev) {
+ev.dataTransfer.setData("text", ev.target.id);
+
+}
   
 let found_matches;
 
 
-
-  function drop(ev) {
+/**
+ * Drop of drag-and-drop functionality. 
+ * Regex which parses the path on the image and then splits it into start prompt and seed. Then it autopopulates it on the form and replaces the image preview.
+ *
+ */
+function drop(ev) {
     ev.preventDefault();
 
     // this gets generation num 
@@ -422,7 +473,10 @@ let found_matches;
 
     
    
-
+    /**
+     * Ajax call triggers the image preview to also update to the new image that was dragged and dropped.
+     *
+     */
 
     $.ajax({
       type: "POST",
@@ -453,14 +507,3 @@ let found_matches;
       }
   });
 }
-
-
-//   function subjectDrop(ev) {
-//     ev.preventDefault();
-//     var data = ev.dataTransfer.getData("text");
-//     $("#subject_savebox").append(document.getElementById(data));
-//     console.log(data);
-//     console.log(document.getElementById(data).children[0].children[0].innerHTML);
-//     subject_suggest_styles(document.getElementById(data).children[0].children[0].innerHTML);
-    
-// }
